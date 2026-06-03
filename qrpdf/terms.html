@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terms of Service - QR+PDF Premium</title>
+  <meta name="description" content="Terms of Service for QR+PDF Premium, a QR scanner, QR generator, document scanner, and PDF utility app.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0b0c;
+      --card: #151517;
+      --elevated: #1c1c1f;
+      --text: #ffffff;
+      --muted: #a2a2aa;
+      --line: rgba(255, 255, 255, 0.08);
+      --accent: #7c5cff;
+      --warning: #ffb84d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(124, 92, 255, 0.18), transparent 34rem),
+        radial-gradient(circle at bottom left, rgba(255, 184, 77, 0.08), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    header {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    .eyebrow {
+      color: var(--warning);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: clamp(34px, 7vw, 58px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 34px 0 10px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    p, li {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    strong {
+      color: var(--text);
+    }
+
+    a {
+      color: #b9a8ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    section {
+      margin-top: 18px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(21, 21, 23, 0.72);
+    }
+
+    .language-card {
+      background: linear-gradient(145deg, rgba(255, 184, 77, 0.12), rgba(21, 21, 23, 0.72));
+    }
+
+    .language-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    select {
+      min-width: 230px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--elevated);
+      color: var(--text);
+      padding: 12px 14px;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .localized-summary {
+      margin: 16px 0 0;
+      color: var(--text);
+    }
+
+    .legal-note {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    ul {
+      padding-left: 22px;
+    }
+
+    .meta {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">QR+PDF Premium</div>
+      <h1>Terms of Service</h1>
+      <p class="meta">Last updated: June 3, 2026</p>
+      <div class="pill-row" aria-label="Terms highlights">
+        <span class="pill">QR scanner</span>
+        <span class="pill">PDF tools</span>
+        <span class="pill">Subscriptions</span>
+        <span class="pill">User-controlled content</span>
+      </div>
+    </header>
+
+    <section class="language-card" aria-label="Language selector">
+      <div class="language-row">
+        <div>
+          <h2 id="languageTitle">Read in your language</h2>
+          <p class="meta" id="languageSubtitle">The English version below is the official legal text.</p>
+        </div>
+        <label>
+          <span class="eyebrow">Language</span><br>
+          <select id="languageSelect" aria-label="Select language"></select>
+        </label>
+      </div>
+      <p class="localized-summary" id="localizedSummary"></p>
+      <p class="legal-note" id="legalNote"></p>
+    </section>
+
+    <section>
+      <h2>1. Agreement</h2>
+      <p>
+        These Terms of Service ("Terms") govern your access to and use of QR+PDF Premium ("QR+PDF", "the App", "we", "us", or "our").
+        By downloading, accessing, or using the App, you agree to these Terms. If you do not agree, do not use the App.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. What the App Does</h2>
+      <p>
+        QR+PDF is a mobile utility app for QR scanning, QR generation, document scanning, PDF editing, PDF organization,
+        Secure QR features, draft recovery, and related productivity tools.
+      </p>
+      <p>
+        Some features may be free. Some features may require a Pro subscription, free trial, lifetime purchase, rewarded unlock,
+        or another entitlement shown in the App.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Your Content and Responsibility</h2>
+      <p>
+        You are responsible for the QR codes, PDFs, documents, images, text, links, Wi-Fi details, contact details,
+        Secure QR content, passwords, signatures, annotations, and other content you scan, create, edit, store, share, or export.
+      </p>
+      <p>You agree not to use the App to create, store, distribute, or share content that:</p>
+      <ul>
+        <li>violates any law, regulation, or third-party right;</li>
+        <li>contains malware, phishing links, scams, deceptive instructions, or harmful payloads;</li>
+        <li>infringes copyright, trademark, privacy, publicity, or other intellectual property rights;</li>
+        <li>is abusive, fraudulent, or intended to harm another person, device, service, or network.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Local Files, Drafts, and Data Loss</h2>
+      <p>
+        QR+PDF is designed to store many scans, drafts, PDF files, and history items locally on your device. You are responsible
+        for keeping backup copies of important documents and passwords. Local files may be lost if you delete them, clear app data,
+        uninstall the App, change device storage, or if the operating system removes temporary files.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Accuracy of Scanning, OCR, PDF Tools, and QR Output</h2>
+      <p>
+        We work to make QR scanning, document scanning, OCR, PDF editing, PDF conversion, Secure QR, and QR generation reliable,
+        but no utility app can guarantee perfect results in every condition. Lighting, camera quality, file corruption, PDF structure,
+        font encoding, image quality, unsupported document formats, QR damage, and third-party app behavior may affect results.
+      </p>
+      <p>
+        You should review important scan results, QR payloads, OCR text, passwords, exported PDFs, exported DOCX files,
+        signatures, watermarks, annotations, and edited documents before relying on or sharing them.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Secure QR and Password-Protected PDFs</h2>
+      <p>
+        Secure QR and PDF password features are intended to add protection to content. They are not a substitute for enterprise
+        security systems, legal compliance systems, or professional document security advice. You are responsible for choosing strong
+        passwords, keeping them private, and remembering them. We may not be able to recover encrypted content or password-protected PDFs.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Subscriptions, Trials, and Purchases</h2>
+      <p>
+        QR+PDF may offer monthly, yearly, lifetime, trial, promotional, or rewarded-access options. Prices, trial length,
+        features, and availability may vary by country, platform, campaign, and time.
+      </p>
+      <ul>
+        <li>Subscriptions renew automatically unless canceled according to Apple App Store or Google Play rules.</li>
+        <li>Free trials may convert to paid subscriptions unless canceled before the trial ends.</li>
+        <li>You can manage or cancel subscriptions through your Apple App Store or Google Play account settings.</li>
+        <li>Refunds are handled by Apple, Google, or the applicable app marketplace according to their policies.</li>
+      </ul>
+      <p>
+        We may change free and paid feature availability over time, but changes will not intentionally remove active paid entitlements
+        without a reasonable replacement or platform-supported handling.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Third-Party Services</h2>
+      <p>
+        The App may interact with third-party services, including Apple App Store, Google Play, Firebase, email apps, file providers,
+        browsers, cloud storage apps, messaging apps, and other apps selected by you for sharing or opening content.
+        Third-party services are governed by their own terms and privacy policies.
+      </p>
+    </section>
+
+    <section>
+      <h2>9. Updates and Changes</h2>
+      <p>
+        We may update the App, add or remove features, fix bugs, change pricing, modify campaigns, or update these Terms.
+        If we make material changes, we will update the "Last updated" date and may provide additional notice where appropriate.
+      </p>
+    </section>
+
+    <section>
+      <h2>10. No Warranties</h2>
+      <p>
+        The App is provided on an "as is" and "as available" basis. To the maximum extent permitted by law,
+        we disclaim warranties of merchantability, fitness for a particular purpose, non-infringement, availability,
+        accuracy, and error-free operation.
+      </p>
+    </section>
+
+    <section>
+      <h2>11. Limitation of Liability</h2>
+      <p>
+        To the maximum extent permitted by law, we will not be liable for indirect, incidental, special, consequential,
+        exemplary, or punitive damages, or for loss of data, loss of documents, loss of profits, business interruption,
+        device issues, inaccurate scan results, failed exports, or reliance on generated or scanned content.
+      </p>
+    </section>
+
+    <section>
+      <h2>12. Apple and Google Terms</h2>
+      <p>
+        If you downloaded the App from Apple App Store or Google Play, your use of the App is also subject to the applicable
+        marketplace terms, subscription rules, payment rules, refund rules, and platform policies.
+      </p>
+    </section>
+
+    <section>
+      <h2>13. Contact</h2>
+      <p>
+        If you have questions about these Terms, contact us at
+        <a href="mailto:khanhquang15@gmail.com">khanhquang15@gmail.com</a>.
+      </p>
+    </section>
+
+    <footer>
+      <p><a href="./privacy.html">Privacy Policy</a> · QR+PDF Premium</p>
+    </footer>
+  </main>
+  <script>
+    const languages = [
+      ["en", "English"], ["es", "Español"], ["pt", "Português"], ["fr", "Français"],
+      ["de", "Deutsch"], ["it", "Italiano"], ["nl", "Nederlands"], ["pl", "Polski"],
+      ["ru", "Русский"], ["uk", "Українська"], ["tr", "Türkçe"], ["ar", "العربية"],
+      ["hi", "हिन्दी"], ["bn", "বাংলা"], ["id", "Bahasa Indonesia"], ["ms", "Bahasa Melayu"],
+      ["vi", "Tiếng Việt"], ["th", "ไทย"], ["zh", "中文"], ["ja", "日本語"],
+      ["ko", "한국어"], ["ro", "Română"]
+    ];
+
+    const copy = {
+      en: {
+        title: "Read in your language",
+        subtitle: "The English version below is the official legal text.",
+        summary: "By using QR+PDF, you agree that you are responsible for the QR codes, PDFs, documents, passwords, links, and other content you scan, create, edit, share, or export. QR scanning, OCR, PDF tools, Secure QR, and exports should be reviewed before important use. Subscriptions, trials, refunds, and purchases are handled through Apple App Store or Google Play.",
+        note: "This localized summary is provided for convenience. If it conflicts with the English Terms below, the English Terms control."
+      },
+      es: {
+        title: "Leer en tu idioma",
+        subtitle: "La versión en inglés de abajo es el texto legal oficial.",
+        summary: "Al usar QR+PDF aceptas que eres responsable de los códigos QR, PDFs, documentos, contraseñas, enlaces y otros contenidos que escaneas, creas, editas, compartes o exportas. Revisa los resultados de QR, OCR, herramientas PDF, Secure QR y exportaciones antes de usarlos en algo importante. Suscripciones, pruebas, reembolsos y compras se gestionan mediante Apple App Store o Google Play.",
+        note: "Este resumen localizado se ofrece por comodidad. Si entra en conflicto con los Terms en inglés, prevalece la versión en inglés."
+      },
+      pt: {
+        title: "Ler no seu idioma",
+        subtitle: "A versão em inglês abaixo é o texto legal oficial.",
+        summary: "Ao usar o QR+PDF, você concorda que é responsável pelos QR codes, PDFs, documentos, senhas, links e outros conteúdos que escaneia, cria, edita, compartilha ou exporta. Revise QR, OCR, ferramentas PDF, Secure QR e exportações antes de uso importante. Assinaturas, testes, reembolsos e compras são gerenciados pela Apple App Store ou Google Play.",
+        note: "Este resumo localizado é fornecido por conveniência. Em caso de conflito, os Terms em inglês prevalecem."
+      },
+      fr: {
+        title: "Lire dans votre langue",
+        subtitle: "La version anglaise ci-dessous est le texte juridique officiel.",
+        summary: "En utilisant QR+PDF, vous acceptez d'être responsable des QR, PDF, documents, mots de passe, liens et autres contenus que vous scannez, créez, modifiez, partagez ou exportez. Vérifiez les résultats de scan QR, OCR, outils PDF, Secure QR et exports avant un usage important. Les abonnements, essais, remboursements et achats sont gérés par Apple App Store ou Google Play.",
+        note: "Ce résumé localisé est fourni pour votre confort. En cas de conflit, les Terms en anglais prévalent."
+      },
+      de: {
+        title: "In deiner Sprache lesen",
+        subtitle: "Die englische Version unten ist der offizielle Rechtstext.",
+        summary: "Durch die Nutzung von QR+PDF stimmst du zu, dass du für QR-Codes, PDFs, Dokumente, Passwörter, Links und andere Inhalte verantwortlich bist, die du scannst, erstellst, bearbeitest, teilst oder exportierst. Prüfe QR-Scans, OCR, PDF-Tools, Secure QR und Exporte vor wichtiger Nutzung. Abos, Tests, Erstattungen und Käufe werden über Apple App Store oder Google Play abgewickelt.",
+        note: "Diese lokalisierte Zusammenfassung dient der Verständlichkeit. Bei Widersprüchen gelten die englischen Terms."
+      },
+      it: {
+        title: "Leggi nella tua lingua",
+        subtitle: "La versione inglese qui sotto è il testo legale ufficiale.",
+        summary: "Usando QR+PDF accetti di essere responsabile di QR, PDF, documenti, password, link e altri contenuti che scansioni, crei, modifichi, condividi o esporti. Controlla scansioni QR, OCR, strumenti PDF, Secure QR ed esportazioni prima di usi importanti. Abbonamenti, prove, rimborsi e acquisti sono gestiti da Apple App Store o Google Play.",
+        note: "Questo riepilogo localizzato è fornito per comodità. In caso di conflitto, prevalgono i Terms in inglese."
+      },
+      nl: {
+        title: "Lees in je taal",
+        subtitle: "De Engelse versie hieronder is de officiële juridische tekst.",
+        summary: "Door QR+PDF te gebruiken ben je verantwoordelijk voor QR-codes, PDF's, documenten, wachtwoorden, links en andere inhoud die je scant, maakt, bewerkt, deelt of exporteert. Controleer QR-scans, OCR, PDF-tools, Secure QR en exports voor belangrijk gebruik. Abonnementen, proefperiodes, terugbetalingen en aankopen lopen via Apple App Store of Google Play.",
+        note: "Deze lokale samenvatting is bedoeld als hulp. Bij tegenstrijdigheid gelden de Engelse Terms."
+      },
+      pl: {
+        title: "Czytaj w swoim języku",
+        subtitle: "Angielska wersja poniżej jest oficjalnym tekstem prawnym.",
+        summary: "Korzystając z QR+PDF, zgadzasz się, że odpowiadasz za kody QR, PDF-y, dokumenty, hasła, linki i inne treści, które skanujesz, tworzysz, edytujesz, udostępniasz lub eksportujesz. Sprawdzaj wyniki QR, OCR, narzędzi PDF, Secure QR i eksportów przed ważnym użyciem. Subskrypcje, okresy próbne, zwroty i zakupy obsługują Apple App Store lub Google Play.",
+        note: "To lokalizowane podsumowanie jest informacyjne. W razie sprzeczności obowiązują angielskie Terms."
+      },
+      ru: {
+        title: "Читать на вашем языке",
+        subtitle: "Английская версия ниже является официальным юридическим текстом.",
+        summary: "Используя QR+PDF, вы соглашаетесь, что отвечаете за QR-коды, PDF, документы, пароли, ссылки и другой контент, который сканируете, создаете, редактируете, делитесь или экспортируете. Проверяйте QR-сканы, OCR, PDF-инструменты, Secure QR и экспорт перед важным использованием. Подписки, пробные периоды, возвраты и покупки обрабатываются Apple App Store или Google Play.",
+        note: "Этот переводной обзор предоставлен для удобства. При расхождениях действуют английские Terms."
+      },
+      uk: {
+        title: "Читати вашою мовою",
+        subtitle: "Англійська версія нижче є офіційним юридичним текстом.",
+        summary: "Користуючись QR+PDF, ви погоджуєтеся, що відповідаєте за QR-коди, PDF, документи, паролі, посилання та інший контент, який скануєте, створюєте, редагуєте, поширюєте або експортуєте. Перевіряйте QR-скани, OCR, PDF-інструменти, Secure QR та експорти перед важливим використанням. Підписки, пробні періоди, повернення коштів і покупки обробляють Apple App Store або Google Play.",
+        note: "Цей локалізований підсумок надано для зручності. У разі розбіжностей діють англійські Terms."
+      },
+      tr: {
+        title: "Kendi dilinde oku",
+        subtitle: "Aşağıdaki İngilizce sürüm resmi yasal metindir.",
+        summary: "QR+PDF'yi kullanarak taradığınız, oluşturduğunuz, düzenlediğiniz, paylaştığınız veya dışa aktardığınız QR kodları, PDF'ler, belgeler, şifreler, bağlantılar ve diğer içeriklerden sorumlu olduğunuzu kabul edersiniz. Önemli kullanım öncesinde QR tarama, OCR, PDF araçları, Secure QR ve dışa aktarmaları kontrol edin. Abonelikler, denemeler, iadeler ve satın almalar Apple App Store veya Google Play üzerinden yönetilir.",
+        note: "Bu yerelleştirilmiş özet kolaylık içindir. Çelişki olursa İngilizce Terms geçerlidir."
+      },
+      ar: {
+        title: "اقرأ بلغتك",
+        subtitle: "النص الإنجليزي أدناه هو النص القانوني الرسمي.",
+        summary: "باستخدام QR+PDF، توافق على أنك مسؤول عن رموز QR وملفات PDF والمستندات وكلمات المرور والروابط والمحتوى الآخر الذي تمسحه أو تنشئه أو تعدله أو تشاركه أو تصدره. راجع نتائج QR وOCR وأدوات PDF وSecure QR والتصدير قبل الاستخدام المهم. تتم إدارة الاشتراكات والتجارب والاستردادات والمشتريات عبر Apple App Store أو Google Play.",
+        note: "هذا الملخص المترجم للتسهيل فقط. إذا تعارض مع الشروط الإنجليزية، فإن النسخة الإنجليزية هي المعتمدة."
+      },
+      hi: {
+        title: "अपनी भाषा में पढ़ें",
+        subtitle: "नीचे दी गई अंग्रेज़ी Terms आधिकारिक कानूनी पाठ है।",
+        summary: "QR+PDF का उपयोग करके आप मानते हैं कि QR codes, PDFs, documents, passwords, links और अन्य content जिसे आप scan, create, edit, share या export करते हैं, उसके लिए आप जिम्मेदार हैं। महत्वपूर्ण उपयोग से पहले QR scan, OCR, PDF tools, Secure QR और exports की समीक्षा करें। Subscriptions, trials, refunds और purchases Apple App Store या Google Play के माध्यम से संभाले जाते हैं।",
+        note: "यह localized summary सुविधा के लिए है। यदि कोई अंतर हो, तो English Terms लागू होंगे।"
+      },
+      bn: {
+        title: "আপনার ভাষায় পড়ুন",
+        subtitle: "নিচের ইংরেজি Terms অফিসিয়াল আইনি পাঠ্য।",
+        summary: "QR+PDF ব্যবহার করলে আপনি স্বীকার করেন যে QR codes, PDFs, documents, passwords, links এবং অন্যান্য content যা আপনি scan, create, edit, share বা export করেন তার জন্য আপনি দায়ী। গুরুত্বপূর্ণ ব্যবহারের আগে QR scan, OCR, PDF tools, Secure QR এবং exports পরীক্ষা করুন। Subscriptions, trials, refunds এবং purchases Apple App Store বা Google Play দ্বারা পরিচালিত হয়।",
+        note: "এই localized summary সুবিধার জন্য। কোনো অমিল হলে English Terms প্রযোজ্য।"
+      },
+      id: {
+        title: "Baca dalam bahasa Anda",
+        subtitle: "Versi bahasa Inggris di bawah adalah teks hukum resmi.",
+        summary: "Dengan menggunakan QR+PDF, Anda setuju bahwa Anda bertanggung jawab atas QR code, PDF, dokumen, kata sandi, tautan, dan konten lain yang Anda scan, buat, edit, bagikan, atau ekspor. Tinjau hasil QR, OCR, PDF tools, Secure QR, dan ekspor sebelum penggunaan penting. Subscription, trial, refund, dan pembelian dikelola melalui Apple App Store atau Google Play.",
+        note: "Ringkasan lokal ini disediakan untuk kemudahan. Jika berbeda, Terms bahasa Inggris yang berlaku."
+      },
+      ms: {
+        title: "Baca dalam bahasa anda",
+        subtitle: "Versi Inggeris di bawah ialah teks undang-undang rasmi.",
+        summary: "Dengan menggunakan QR+PDF, anda bersetuju bahawa anda bertanggungjawab atas kod QR, PDF, dokumen, kata laluan, pautan dan kandungan lain yang anda imbas, cipta, edit, kongsi atau eksport. Semak hasil QR, OCR, alat PDF, Secure QR dan eksport sebelum penggunaan penting. Subscription, trial, refund dan pembelian diurus melalui Apple App Store atau Google Play.",
+        note: "Ringkasan setempat ini disediakan untuk kemudahan. Jika bercanggah, Terms Inggeris diguna pakai."
+      },
+      vi: {
+        title: "Đọc bằng ngôn ngữ của bạn",
+        subtitle: "Bản tiếng Anh bên dưới là văn bản pháp lý chính thức.",
+        summary: "Khi dùng QR+PDF, bạn đồng ý rằng bạn chịu trách nhiệm với QR code, PDF, tài liệu, password, link và nội dung khác mà bạn scan, tạo, edit, share hoặc export. Hãy review kết quả QR scan, OCR, PDF tools, Secure QR và file export trước khi dùng cho việc quan trọng. Subscription, trial, refund và purchase được xử lý qua Apple App Store hoặc Google Play.",
+        note: "Bản tóm tắt tiếng Việt này để người dùng dễ hiểu. Nếu có khác biệt, bản Terms tiếng Anh sẽ được áp dụng."
+      },
+      th: {
+        title: "อ่านในภาษาของคุณ",
+        subtitle: "เวอร์ชันภาษาอังกฤษด้านล่างคือข้อความทางกฎหมายอย่างเป็นทางการ",
+        summary: "เมื่อใช้ QR+PDF คุณยอมรับว่าคุณรับผิดชอบต่อ QR code, PDF, เอกสาร, password, link และเนื้อหาอื่นที่คุณ scan, create, edit, share หรือ export โปรดตรวจสอบผล QR scan, OCR, PDF tools, Secure QR และ export ก่อนใช้กับเรื่องสำคัญ Subscription, trial, refund และ purchase จัดการผ่าน Apple App Store หรือ Google Play",
+        note: "สรุปภาษาท้องถิ่นนี้มีไว้เพื่อความสะดวก หากขัดแย้งกัน Terms ภาษาอังกฤษจะมีผล"
+      },
+      zh: {
+        title: "使用你的语言阅读",
+        subtitle: "下方英文版本为正式法律文本。",
+        summary: "使用 QR+PDF 即表示你同意对自己扫描、创建、编辑、分享或导出的 QR code、PDF、文档、password、link 及其他内容负责。在重要使用前，请检查 QR 扫描、OCR、PDF 工具、Secure QR 和导出结果。订阅、试用、退款和购买由 Apple App Store 或 Google Play 处理。",
+        note: "本地化摘要仅为方便阅读。如与英文 Terms 冲突，以英文版本为准。"
+      },
+      ja: {
+        title: "あなたの言語で読む",
+        subtitle: "下記の英語版が正式な法的文書です。",
+        summary: "QR+PDF を使用することで、スキャン、作成、編集、共有、エクスポートする QR code、PDF、文書、password、link、その他のコンテンツについて責任を負うことに同意します。重要な用途では QR スキャン、OCR、PDF tools、Secure QR、エクスポート結果を確認してください。Subscription、trial、refund、purchase は Apple App Store または Google Play が処理します。",
+        note: "このローカライズされた要約は利便性のためのものです。相違がある場合は英語版の Terms が優先されます。"
+      },
+      ko: {
+        title: "내 언어로 읽기",
+        subtitle: "아래 영어 버전이 공식 법적 문서입니다.",
+        summary: "QR+PDF를 사용하면 사용자가 scan, create, edit, share 또는 export하는 QR code, PDF, 문서, password, link 및 기타 content에 대해 책임진다는 데 동의합니다. 중요한 사용 전 QR scan, OCR, PDF tools, Secure QR 및 export 결과를 확인하세요. Subscription, trial, refund 및 purchase는 Apple App Store 또는 Google Play에서 처리합니다.",
+        note: "이 현지화 요약은 편의를 위한 것입니다. 충돌이 있는 경우 영어 Terms가 우선합니다."
+      },
+      ro: {
+        title: "Citește în limba ta",
+        subtitle: "Versiunea în engleză de mai jos este textul juridic oficial.",
+        summary: "Prin folosirea QR+PDF, accepți că ești responsabil pentru codurile QR, PDF-urile, documentele, parolele, linkurile și alte conținuturi pe care le scanezi, creezi, editezi, distribui sau exporți. Verifică QR scan, OCR, PDF tools, Secure QR și exporturile înainte de utilizări importante. Subscription, trial, refund și purchase sunt gestionate prin Apple App Store sau Google Play.",
+        note: "Acest rezumat localizat este oferit pentru confort. Dacă există diferențe, Terms în engleză prevalează."
+      }
+    };
+
+    const select = document.getElementById("languageSelect");
+    const browserLanguage = (navigator.language || "en").slice(0, 2).toLowerCase();
+    const initialLanguage = copy[browserLanguage] ? browserLanguage : "en";
+
+    for (const [code, label] of languages) {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = label;
+      select.appendChild(option);
+    }
+
+    function renderLanguage(code) {
+      const item = copy[code] || copy.en;
+      document.documentElement.lang = code;
+      document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
+      document.getElementById("languageTitle").textContent = item.title;
+      document.getElementById("languageSubtitle").textContent = item.subtitle;
+      document.getElementById("localizedSummary").textContent = item.summary;
+      document.getElementById("legalNote").textContent = item.note;
+      select.value = code;
+    }
+
+    select.addEventListener("change", (event) => renderLanguage(event.target.value));
+    renderLanguage(initialLanguage);
+  </script>
+</body>
+</html>
