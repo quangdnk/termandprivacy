@@ -60,6 +60,11 @@
     .button:hover { text-decoration: none; filter: brightness(1.05); }
     nav { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
     nav a { padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); font-weight: 800; }
+    .language-card { background: linear-gradient(145deg, rgba(245,127,23,.14), rgba(25,19,22,.78)); }
+    .language-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    select { min-width: 230px; border: 1px solid var(--line); border-radius: 14px; background: var(--elevated); color: var(--text); padding: 12px 14px; font: inherit; font-weight: 800; }
+    .localized-summary { margin: 16px 0 0; color: var(--text); }
+    .legal-note { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
     footer { margin-top: 28px; color: var(--muted); font-size: 13px; text-align: center; }
     @media (max-width: 720px) { main { padding-top: 28px; } header, section { padding: 20px; border-radius: 22px; } .grid { grid-template-columns: 1fr; } }
 
@@ -79,66 +84,276 @@
       </nav>
     </header>
 
-    <section>
-      <h2>1. Acceptance</h2>
-      <p>By downloading, accessing, or using BabyDays, you agree to these Terms of Service. If you do not agree, do not use the app.</p>
-    </section>
-    <section>
-      <h2>2. What BabyDays does</h2>
-      <p>BabyDays helps parents and caregivers record baby care moments such as feeding, sleep, diapers, growth, milestones, medicine notes, handoff notes, reminders, and parent check-ins.</p>
-    </section>
-    <section>
-      <h2>3. Not medical advice</h2>
-      <p>BabyDays is not a medical device and does not provide medical diagnosis, treatment, medication instructions, emergency guidance, or professional healthcare advice. Always consult a qualified healthcare professional for medical questions. For emergencies, contact local emergency services immediately.</p>
-    </section>
-    <section>
-      <h2>4. Your responsibility</h2>
-      <ul>
-        <li>You are responsible for the accuracy of the information you enter.</li>
-        <li>You should review reminders, logs, summaries, and exports before relying on them.</li>
-        <li>You should not use BabyDays as the only source for medication, feeding, or medical decisions.</li>
-      </ul>
-    </section>
-    <section>
-      <h2>5. Local storage and backups</h2>
-      <p>BabyDays is offline-first. Local data may be lost if the app is deleted, the device is damaged, or device storage is cleared. If export or backup features are available, you are responsible for storing exported files safely.</p>
-    </section>
-    <section>
-      <h2>6. Premium purchases</h2>
-      <p>BabyDays may offer monthly, yearly, lifetime, or other premium purchases. Prices, currencies, trials, renewals, refunds, and cancellation are handled by Apple App Store or Google Play and shown by the store at purchase time.</p>
-      <p>Subscriptions renew automatically unless cancelled through your store account before the renewal date. We cannot directly cancel subscriptions or issue refunds outside the platform process.</p>
-    </section>
-    <section>
-      <h2>7. Feature availability</h2>
-      <p>We may improve, add, remove, or change features over time. We aim not to intentionally remove active paid entitlements without a reasonable replacement or platform-supported handling.</p>
-    </section>
-    <section>
-      <h2>8. Third-party services</h2>
-      <p>BabyDays may interact with Apple App Store, Google Play, Firebase, email apps, file providers, cloud storage apps, messaging apps, and other apps you choose for sharing or exporting. Third-party services are governed by their own terms and privacy policies.</p>
-    </section>
-    <section>
-      <h2>9. Acceptable use</h2>
-      <p>Do not misuse BabyDays, attempt to reverse engineer restricted parts of the app, interfere with app operation, or use the app in a way that violates applicable law or another person’s rights.</p>
-    </section>
-    <section>
-      <h2>10. Disclaimer and limitation of liability</h2>
-      <p>BabyDays is provided “as is” and “as available.” To the maximum extent permitted by law, we are not liable for indirect, incidental, consequential, special, or punitive damages, or for loss of data, missed reminders, inaccurate entries, or decisions made based on app content.</p>
-    </section>
-    <section>
-      <h2>11. Changes to these Terms</h2>
-      <p>We may update these Terms when the app or legal requirements change. Continued use of BabyDays after changes means you accept the updated Terms.</p>
-    </section>
-    <section class="cta-card">
-      <div class="cta-row">
+    <section class="language-card" aria-label="Language selector">
+      <div class="language-row">
         <div>
-          <h2>12. Contact</h2>
-          <p>Questions about these Terms? Contact us at <a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a>.</p>
+          <h2 id="languageTitle">Read in your language</h2>
+          <p class="meta" id="languageSubtitle">The English version is the official legal text.</p>
         </div>
-        <a class="button" href="mailto:khanhquang29000@gmail.com?subject=BabyDays%20Terms%20Question">Email us</a>
+        <label>
+          <span class="eyebrow">Language</span><br>
+          <select id="languageSelect" aria-label="Select language"></select>
+        </label>
       </div>
+      <p class="localized-summary" id="localizedSummary"></p>
+      <p class="legal-note" id="legalNote"></p>
     </section>
+
+    <div id="sc"></div>
 
     <footer>BabyDays · Contact: <a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a></footer>
   </main>
+  <script>
+    const languages = [
+      ["en", "English"], ["vi", "Tiếng Việt"], ["ja", "日本語"], ["ko", "한국어"],
+      ["zh", "简体中文"], ["es", "Español"], ["pt", "Português"], ["fr", "Français"],
+      ["de", "Deutsch"], ["ar", "العربية"]
+    ];
+
+    const copy = {
+      en: {
+        title: "Read in your language",
+        subtitle: "The English version is the official legal text.",
+        summary: "By using BabyDays, you agree that the app is a baby care tracker, not a medical device. You are responsible for the information you enter and for reviewing reminders, logs, summaries, exports, and premium purchases handled through Apple App Store or Google Play.",
+        note: "This localized text is provided for convenience. If it conflicts with the English Terms, the English version controls."
+      },
+      vi: {
+        title: "Đọc bằng ngôn ngữ của bạn",
+        subtitle: "Bản tiếng Anh là văn bản pháp lý chính thức.",
+        summary: "Khi sử dụng BabyDays, bạn đồng ý rằng ứng dụng là công cụ theo dõi chăm sóc bé, không phải thiết bị y tế. Bạn chịu trách nhiệm với thông tin mình nhập và cần kiểm tra nhắc nhở, nhật ký, tóm tắt, file xuất, cũng như các gói premium được xử lý qua Apple App Store hoặc Google Play.",
+        note: "Bản tiếng Việt này nhằm giúp người dùng dễ hiểu. Nếu có khác biệt, bản Terms tiếng Anh sẽ được áp dụng."
+      },
+      ja: {
+        title: "あなたの言語で読む",
+        subtitle: "英語版が正式な法的文書です。",
+        summary: "BabyDays を使用することで、このアプリは赤ちゃんケア記録ツールであり医療機器ではないことに同意します。入力情報の正確性、リマインダー、記録、要約、書き出し、Apple App Store または Google Play を通じたプレミアム購入の確認はユーザーの責任です。",
+        note: "この日本語テキストは便宜のために提供されています。英語の Terms と相違がある場合は英語版が優先されます。"
+      },
+      ko: {
+        title: "내 언어로 읽기",
+        subtitle: "영어 버전이 공식 법적 문서입니다.",
+        summary: "BabyDays를 사용하면 이 앱이 의료기기가 아닌 아기 돌봄 추적 도구임에 동의합니다. 입력한 정보의 정확성, 알림, 기록, 요약, 내보내기 및 Apple App Store 또는 Google Play를 통한 프리미엄 구매 확인은 사용자 책임입니다.",
+        note: "이 한국어 텍스트는 편의를 위한 것입니다. 영어 Terms와 충돌하는 경우 영어 버전이 우선합니다."
+      },
+      zh: {
+        title: "使用你的语言阅读",
+        subtitle: "英文版本为正式法律文本。",
+        summary: "使用 BabyDays 即表示你同意本应用是宝宝护理记录工具，而不是医疗设备。你需要对输入信息的准确性负责，并在依赖提醒、记录、摘要、导出以及通过 Apple App Store 或 Google Play 处理的 premium 购买前进行检查。",
+        note: "本中文文本仅为方便阅读。如与英文 Terms 冲突，以英文版本为准。"
+      },
+      es: {
+        title: "Leer en tu idioma",
+        subtitle: "La versión en inglés es el texto legal oficial.",
+        summary: "Al usar BabyDays, aceptas que la app es un rastreador de cuidado del bebé, no un dispositivo médico. Eres responsable de la información que introduces y de revisar recordatorios, registros, resúmenes, exportaciones y compras premium gestionadas por Apple App Store o Google Play.",
+        note: "Este texto localizado se ofrece por comodidad. Si entra en conflicto con los Terms en inglés, prevalece la versión en inglés."
+      },
+      pt: {
+        title: "Ler no seu idioma",
+        subtitle: "A versão em inglês é o texto jurídico oficial.",
+        summary: "Ao usar o BabyDays, você concorda que o app é um rastreador de cuidados do bebê, não um dispositivo médico. Você é responsável pelas informações inseridas e por revisar lembretes, registros, resumos, exportações e compras premium tratadas pela Apple App Store ou Google Play.",
+        note: "Este texto localizado é fornecido por conveniência. Em caso de conflito com os Terms em inglês, a versão em inglês prevalece."
+      },
+      fr: {
+        title: "Lire dans votre langue",
+        subtitle: "La version anglaise est le texte juridique officiel.",
+        summary: "En utilisant BabyDays, vous acceptez que l'app soit un outil de suivi des soins du bébé, pas un dispositif médical. Vous êtes responsable des informations saisies et devez vérifier les rappels, journaux, résumés, exports et achats premium gérés par Apple App Store ou Google Play.",
+        note: "Ce texte localisé est fourni pour votre confort. En cas de conflit avec les Terms en anglais, la version anglaise prévaut."
+      },
+      de: {
+        title: "In deiner Sprache lesen",
+        subtitle: "Die englische Version ist der offizielle Rechtstext.",
+        summary: "Durch die Nutzung von BabyDays stimmst du zu, dass die App ein Baby-Pflege-Tracker und kein Medizinprodukt ist. Du bist für die eingegebenen Informationen und für die Prüfung von Erinnerungen, Protokollen, Zusammenfassungen, Exporten sowie Premium-Käufen über Apple App Store oder Google Play verantwortlich.",
+        note: "Dieser lokalisierte Text dient der Verständlichkeit. Bei Widersprüchen zu den englischen Terms gilt die englische Version."
+      },
+      ar: {
+        title: "اقرأ بلغتك",
+        subtitle: "النسخة الإنجليزية هي النص القانوني الرسمي.",
+        summary: "باستخدام BabyDays، توافق على أن التطبيق أداة لتتبع رعاية الطفل وليس جهازًا طبيًا. أنت مسؤول عن المعلومات التي تدخلها وعن مراجعة التذكيرات والسجلات والملخصات وعمليات التصدير ومشتريات premium التي تتم عبر Apple App Store أو Google Play.",
+        note: "هذا النص المترجم للتسهيل فقط. إذا تعارض مع Terms الإنجليزية، فإن النسخة الإنجليزية هي المعتمدة."
+      }
+    };
+
+    const sections = {
+      en: [
+        {h:"1. Acceptance",b:["By downloading, accessing, or using BabyDays, you agree to these Terms of Service. If you do not agree, do not use the app."]},
+        {h:"2. What BabyDays does",b:["BabyDays helps parents and caregivers record baby care moments such as feeding, sleep, diapers, growth, milestones, medicine notes, handoff notes, reminders, and parent check-ins."]},
+        {h:"3. Not medical advice",b:["BabyDays is not a medical device and does not provide medical diagnosis, treatment, medication instructions, emergency guidance, or professional healthcare advice. Always consult a qualified healthcare professional for medical questions. For emergencies, contact local emergency services immediately."]},
+        {h:"4. Your responsibility",b:[["You are responsible for the accuracy of the information you enter.","You should review reminders, logs, summaries, and exports before relying on them.","You should not use BabyDays as the only source for medication, feeding, or medical decisions."]]},
+        {h:"5. Local storage and backups",b:["BabyDays is offline-first. Local data may be lost if the app is deleted, the device is damaged, or device storage is cleared. If export or backup features are available, you are responsible for storing exported files safely."]},
+        {h:"6. Premium purchases",b:["BabyDays may offer monthly, yearly, lifetime, or other premium purchases. Prices, currencies, trials, renewals, refunds, and cancellation are handled by Apple App Store or Google Play and shown by the store at purchase time.","Subscriptions renew automatically unless cancelled through your store account before the renewal date. We cannot directly cancel subscriptions or issue refunds outside the platform process."]},
+        {h:"7. Feature availability",b:["We may improve, add, remove, or change features over time. We aim not to intentionally remove active paid entitlements without a reasonable replacement or platform-supported handling."]},
+        {h:"8. Third-party services",b:["BabyDays may interact with Apple App Store, Google Play, Firebase, email apps, file providers, cloud storage apps, messaging apps, and other apps you choose for sharing or exporting. Third-party services are governed by their own terms and privacy policies."]},
+        {h:"9. Acceptable use",b:["Do not misuse BabyDays, attempt to reverse engineer restricted parts of the app, interfere with app operation, or use the app in a way that violates applicable law or another person's rights."]},
+        {h:"10. Disclaimer and limitation of liability",b:["BabyDays is provided as is and as available. To the maximum extent permitted by law, we are not liable for indirect, incidental, consequential, special, or punitive damages, or for loss of data, missed reminders, inaccurate entries, or decisions made based on app content."]},
+        {h:"11. Changes to these Terms",b:["We may update these Terms when the app or legal requirements change. Continued use of BabyDays after changes means you accept the updated Terms."]},
+        {h:"12. Contact",c:true,b:["Questions about these Terms? Contact us at {{email}}."]}
+      ],
+      vi: [
+        {h:"1. Chấp nhận",b:["Bằng cách tải xuống, truy cập hoặc sử dụng BabyDays, bạn đồng ý với các Terms of Service này. Nếu không đồng ý, vui lòng không sử dụng ứng dụng."]},
+        {h:"2. BabyDays làm gì",b:["BabyDays giúp cha mẹ và người chăm sóc ghi lại các khoảnh khắc chăm sóc bé như bú, ngủ, tã, tăng trưởng, mốc phát triển, ghi chú thuốc, ghi chú bàn giao, nhắc nhở và check-in của phụ huynh."]},
+        {h:"3. Không phải tư vấn y tế",b:["BabyDays không phải là thiết bị y tế và không cung cấp chẩn đoán y tế, điều trị, hướng dẫn dùng thuốc, hướng dẫn khẩn cấp hoặc tư vấn chăm sóc sức khỏe chuyên môn. Luôn hỏi chuyên gia y tế đủ điều kiện cho các vấn đề y tế. Trong trường hợp khẩn cấp, hãy liên hệ dịch vụ khẩn cấp địa phương ngay lập tức."]},
+        {h:"4. Trách nhiệm của bạn",b:[["Bạn chịu trách nhiệm về độ chính xác của thông tin bạn nhập.","Bạn nên kiểm tra nhắc nhở, nhật ký, tóm tắt và file xuất trước khi dựa vào chúng.","Bạn không nên dùng BabyDays như nguồn duy nhất cho quyết định về thuốc, cho bú hoặc y tế."]]},
+        {h:"5. Lưu trữ cục bộ và sao lưu",b:["BabyDays hoạt động theo hướng offline-first. Dữ liệu cục bộ có thể bị mất nếu app bị xóa, thiết bị hỏng hoặc bộ nhớ thiết bị bị xóa. Nếu có tính năng xuất hoặc sao lưu, bạn chịu trách nhiệm lưu trữ file xuất an toàn."]},
+        {h:"6. Gói premium",b:["BabyDays có thể cung cấp gói premium theo tháng, năm, trọn đời hoặc hình thức khác. Giá, tiền tệ, dùng thử, gia hạn, hoàn tiền và hủy được xử lý bởi Apple App Store hoặc Google Play và hiển thị tại thời điểm mua.","Subscription tự động gia hạn trừ khi bạn hủy qua tài khoản cửa hàng trước ngày gia hạn. Chúng tôi không thể trực tiếp hủy subscription hoặc hoàn tiền ngoài quy trình của nền tảng."]},
+        {h:"7. Tính khả dụng của tính năng",b:["Chúng tôi có thể cải thiện, thêm, xóa hoặc thay đổi tính năng theo thời gian. Chúng tôi cố gắng không cố ý xóa quyền trả phí đang hoạt động nếu không có thay thế hợp lý hoặc xử lý được nền tảng hỗ trợ."]},
+        {h:"8. Dịch vụ bên thứ ba",b:["BabyDays có thể tương tác với Apple App Store, Google Play, Firebase, app email, nhà cung cấp file, app lưu trữ đám mây, app nhắn tin và các app khác bạn chọn để chia sẻ hoặc xuất. Dịch vụ bên thứ ba chịu điều chỉnh bởi điều khoản và chính sách riêng của họ."]},
+        {h:"9. Sử dụng được chấp nhận",b:["Không lạm dụng BabyDays, cố gắng reverse engineer các phần bị hạn chế của app, can thiệp hoạt động của app, hoặc dùng app theo cách vi phạm pháp luật áp dụng hoặc quyền của người khác."]},
+        {h:"10. Miễn trừ và giới hạn trách nhiệm",b:["BabyDays được cung cấp theo hiện trạng và tùy tình trạng sẵn có. Trong phạm vi tối đa pháp luật cho phép, chúng tôi không chịu trách nhiệm cho thiệt hại gián tiếp, ngẫu nhiên, hệ quả, đặc biệt hoặc trừng phạt, hoặc mất dữ liệu, lỡ nhắc nhở, mục nhập không chính xác hay quyết định dựa trên nội dung app."]},
+        {h:"11. Thay đổi Terms",b:["Chúng tôi có thể cập nhật các Terms này khi app hoặc yêu cầu pháp lý thay đổi. Việc tiếp tục dùng BabyDays sau thay đổi nghĩa là bạn chấp nhận Terms đã cập nhật."]},
+        {h:"12. Liên hệ",c:true,b:["Có câu hỏi về các Terms này? Liên hệ với chúng tôi tại {{email}}."]}
+      ],
+      ja: [
+        {h:"1. 同意",b:["BabyDays をダウンロード、アクセス、または使用することで、この Terms of Service に同意したものとみなされます。同意しない場合はアプリを使用しないでください。"]},
+        {h:"2. BabyDays の機能",b:["BabyDays は、保護者やケア担当者が授乳、睡眠、おむつ、成長、マイルストーン、薬のメモ、引き継ぎメモ、リマインダー、保護者チェックインなどの赤ちゃんケアの瞬間を記録するのを助けます。"]},
+        {h:"3. 医療助言ではありません",b:["BabyDays は医療機器ではなく、医学的診断、治療、薬の指示、緊急時の案内、専門的な医療助言を提供しません。医療上の質問は必ず資格のある医療専門家に相談してください。緊急時には直ちに地域の救急サービスに連絡してください。"]},
+        {h:"4. あなたの責任",b:[["入力する情報の正確性について責任を負います。","リマインダー、記録、要約、書き出しを利用する前に確認してください。","薬、授乳、医療上の判断について BabyDays を唯一の情報源として使用しないでください。"]]},
+        {h:"5. ローカル保存とバックアップ",b:["BabyDays はオフライン優先です。アプリの削除、端末の破損、端末ストレージの消去によりローカルデータが失われることがあります。書き出しまたはバックアップ機能がある場合、書き出したファイルを安全に保管する責任はユーザーにあります。"]},
+        {h:"6. プレミアム購入",b:["BabyDays は月額、年額、買い切り、その他のプレミアム購入を提供する場合があります。価格、通貨、試用、更新、返金、キャンセルは Apple App Store または Google Play により処理され、購入時にストアで表示されます。","サブスクリプションは更新日前にストアアカウントからキャンセルしない限り自動更新されます。当社はプラットフォーム外でサブスクリプションを直接キャンセルしたり返金したりできません。"]},
+        {h:"7. 機能の提供",b:["当社は機能を改善、追加、削除、変更することがあります。合理的な代替またはプラットフォームでサポートされる処理なしに、有効な有料権限を意図的に削除しないよう努めます。"]},
+        {h:"8. 第三者サービス",b:["BabyDays は Apple App Store、Google Play、Firebase、メールアプリ、ファイルプロバイダー、クラウドストレージアプリ、メッセージアプリ、共有や書き出しのために選択した他のアプリと連携する場合があります。第三者サービスには各自の規約とプライバシーポリシーが適用されます。"]},
+        {h:"9. 許容される使用",b:["BabyDays を悪用したり、制限された部分をリバースエンジニアリングしようとしたり、アプリの動作を妨害したり、適用法または他者の権利に違反する方法で使用したりしないでください。"]},
+        {h:"10. 免責および責任制限",b:["BabyDays は現状有姿かつ提供可能な範囲で提供されます。法律で認められる最大限の範囲で、当社は間接的、偶発的、結果的、特別、懲罰的損害、データ損失、通知漏れ、不正確な入力、アプリ内容に基づく判断について責任を負いません。"]},
+        {h:"11. Terms の変更",b:["アプリまたは法的要件が変更された場合、当社はこの Terms を更新することがあります。変更後も BabyDays を使用し続ける場合、更新後の Terms に同意したものとみなされます。"]},
+        {h:"12. 連絡先",c:true,b:["この Terms について質問がある場合は {{email}} までご連絡ください。"]}
+      ],
+      ko: [
+        {h:"1. 동의",b:["BabyDays를 다운로드, 접근 또는 사용하면 본 Terms of Service에 동의하는 것입니다. 동의하지 않는 경우 앱을 사용하지 마세요."]},
+        {h:"2. BabyDays의 기능",b:["BabyDays는 부모와 돌봄 제공자가 수유, 수면, 기저귀, 성장, 발달 이정표, 약 메모, 인계 메모, 알림 및 부모 체크인 같은 아기 돌봄 순간을 기록하도록 돕습니다."]},
+        {h:"3. 의료 조언 아님",b:["BabyDays는 의료기기가 아니며 의학적 진단, 치료, 약물 지시, 응급 안내 또는 전문 의료 조언을 제공하지 않습니다. 의학적 질문은 항상 자격 있는 의료 전문가와 상담하세요. 응급 상황에서는 즉시 지역 응급 서비스에 연락하세요."]},
+        {h:"4. 사용자 책임",b:[["입력한 정보의 정확성에 대한 책임은 사용자에게 있습니다.","알림, 기록, 요약 및 내보내기를 신뢰하기 전에 검토해야 합니다.","약물, 수유 또는 의료 결정의 유일한 근거로 BabyDays를 사용해서는 안 됩니다."]]},
+        {h:"5. 로컬 저장 및 백업",b:["BabyDays는 오프라인 우선 앱입니다. 앱이 삭제되거나 기기가 손상되거나 기기 저장소가 지워지면 로컬 데이터가 손실될 수 있습니다. 내보내기 또는 백업 기능이 제공되는 경우 내보낸 파일을 안전하게 보관할 책임은 사용자에게 있습니다."]},
+        {h:"6. 프리미엄 구매",b:["BabyDays는 월간, 연간, 평생 또는 기타 프리미엄 구매를 제공할 수 있습니다. 가격, 통화, 체험, 갱신, 환불 및 취소는 Apple App Store 또는 Google Play에서 처리되며 구매 시 스토어에 표시됩니다.","구독은 갱신일 전에 스토어 계정에서 취소하지 않는 한 자동 갱신됩니다. 당사는 플랫폼 절차 외부에서 구독을 직접 취소하거나 환불할 수 없습니다."]},
+        {h:"7. 기능 제공 여부",b:["당사는 시간이 지남에 따라 기능을 개선, 추가, 제거 또는 변경할 수 있습니다. 합리적인 대체 또는 플랫폼이 지원하는 처리 없이 활성 유료 권한을 의도적으로 제거하지 않도록 노력합니다."]},
+        {h:"8. 제3자 서비스",b:["BabyDays는 Apple App Store, Google Play, Firebase, 이메일 앱, 파일 제공자, 클라우드 저장소 앱, 메시징 앱 및 사용자가 공유 또는 내보내기를 위해 선택한 기타 앱과 상호작용할 수 있습니다. 제3자 서비스에는 자체 약관과 개인정보처리방침이 적용됩니다."]},
+        {h:"9. 허용되는 사용",b:["BabyDays를 오용하거나, 앱의 제한된 부분을 리버스 엔지니어링하려 하거나, 앱 작동을 방해하거나, 관련 법률 또는 타인의 권리를 침해하는 방식으로 사용하지 마세요."]},
+        {h:"10. 면책 및 책임 제한",b:["BabyDays는 있는 그대로 및 제공 가능한 상태로 제공됩니다. 법이 허용하는 최대 범위에서 당사는 간접, 우발, 결과, 특별 또는 징벌적 손해, 데이터 손실, 놓친 알림, 부정확한 입력 또는 앱 콘텐츠에 근거한 결정에 대해 책임지지 않습니다."]},
+        {h:"11. Terms 변경",b:["앱 또는 법적 요구사항이 변경되면 본 Terms를 업데이트할 수 있습니다. 변경 후 BabyDays를 계속 사용하는 것은 업데이트된 Terms를 수락한다는 의미입니다."]},
+        {h:"12. 연락처",c:true,b:["본 Terms에 관한 질문은 {{email}} 로 문의하세요."]}
+      ],
+      zh: [
+        {h:"1. 接受",b:["下载、访问或使用 BabyDays 即表示你同意本 Terms of Service。如果你不同意，请不要使用本应用。"]},
+        {h:"2. BabyDays 的用途",b:["BabyDays 帮助父母和护理者记录宝宝护理时刻，例如喂养、睡眠、尿布、成长、里程碑、用药备注、交接备注、提醒和家长状态记录。"]},
+        {h:"3. 非医疗建议",b:["BabyDays 不是医疗设备，不提供医学诊断、治疗、用药说明、紧急指导或专业医疗建议。医疗问题请始终咨询合格的医疗专业人士。紧急情况请立即联系当地急救服务。"]},
+        {h:"4. 你的责任",b:[["你需要对输入信息的准确性负责。","在依赖提醒、记录、摘要和导出前，你应先进行检查。","你不应将 BabyDays 作为用药、喂养或医疗决定的唯一来源。"]]},
+        {h:"5. 本地存储和备份",b:["BabyDays 是离线优先应用。如果应用被删除、设备损坏或设备存储被清除，本地数据可能丢失。如果提供导出或备份功能，你有责任安全保存导出的文件。"]},
+        {h:"6. Premium 购买",b:["BabyDays 可能提供月度、年度、终身或其他 premium 购买。价格、币种、试用、续订、退款和取消由 Apple App Store 或 Google Play 处理，并在购买时由商店显示。","订阅会自动续订，除非你在续订日前通过商店账户取消。我们无法在平台流程之外直接取消订阅或退款。"]},
+        {h:"7. 功能可用性",b:["我们可能会随时间改进、添加、移除或更改功能。我们会尽量不在没有合理替代或平台支持处理的情况下故意移除有效的付费权益。"]},
+        {h:"8. 第三方服务",b:["BabyDays 可能与 Apple App Store、Google Play、Firebase、邮件应用、文件提供商、云存储应用、消息应用，以及你选择用于分享或导出的其他应用交互。第三方服务受其自身条款和隐私政策约束。"]},
+        {h:"9. 可接受使用",b:["请勿滥用 BabyDays、尝试逆向工程应用的受限部分、干扰应用运行，或以违反适用法律或他人权利的方式使用应用。"]},
+        {h:"10. 免责声明和责任限制",b:["BabyDays 按现状和可用状态提供。在法律允许的最大范围内，我们不对间接、偶然、后果性、特殊或惩罚性损害负责，也不对数据丢失、错过提醒、不准确输入或基于应用内容作出的决定负责。"]},
+        {h:"11. Terms 变更",b:["当应用或法律要求发生变化时，我们可能会更新本 Terms。变更后继续使用 BabyDays 即表示你接受更新后的 Terms。"]},
+        {h:"12. 联系",c:true,b:["如果你对本 Terms 有疑问，请通过 {{email}} 联系我们。"]}
+      ],
+      es: [
+        {h:"1. Aceptación",b:["Al descargar, acceder o usar BabyDays, aceptas estos Terms of Service. Si no estás de acuerdo, no uses la app."]},
+        {h:"2. Qué hace BabyDays",b:["BabyDays ayuda a padres y cuidadores a registrar momentos de cuidado del bebé como alimentación, sueño, pañales, crecimiento, hitos, notas de medicina, notas de relevo, recordatorios y check-ins de padres."]},
+        {h:"3. No es consejo médico",b:["BabyDays no es un dispositivo médico y no proporciona diagnóstico, tratamiento, instrucciones de medicación, guía de emergencia ni asesoramiento sanitario profesional. Consulta siempre a un profesional de salud cualificado para preguntas médicas. En emergencias, contacta de inmediato con los servicios locales de emergencia."]},
+        {h:"4. Tu responsabilidad",b:[["Eres responsable de la exactitud de la información que introduces.","Debes revisar recordatorios, registros, resúmenes y exportaciones antes de confiar en ellos.","No debes usar BabyDays como única fuente para decisiones de medicación, alimentación o salud."]]},
+        {h:"5. Almacenamiento local y copias",b:["BabyDays es offline-first. Los datos locales pueden perderse si se elimina la app, se daña el dispositivo o se borra el almacenamiento. Si hay funciones de exportación o copia, eres responsable de guardar los archivos exportados de forma segura."]},
+        {h:"6. Compras premium",b:["BabyDays puede ofrecer compras premium mensuales, anuales, de por vida u otras. Precios, monedas, pruebas, renovaciones, reembolsos y cancelaciones son gestionados por Apple App Store o Google Play y mostrados por la tienda al comprar.","Las suscripciones se renuevan automáticamente salvo cancelación desde tu cuenta de la tienda antes de la fecha de renovación. No podemos cancelar suscripciones ni emitir reembolsos directamente fuera del proceso de la plataforma."]},
+        {h:"7. Disponibilidad de funciones",b:["Podemos mejorar, añadir, quitar o cambiar funciones con el tiempo. Procuramos no eliminar intencionalmente derechos pagados activos sin una sustitución razonable o manejo admitido por la plataforma."]},
+        {h:"8. Servicios de terceros",b:["BabyDays puede interactuar con Apple App Store, Google Play, Firebase, apps de email, proveedores de archivos, apps de almacenamiento en la nube, apps de mensajería y otras apps que elijas para compartir o exportar. Los servicios de terceros se rigen por sus propios términos y políticas de privacidad."]},
+        {h:"9. Uso aceptable",b:["No hagas mal uso de BabyDays, no intentes aplicar ingeniería inversa a partes restringidas de la app, no interfieras con su funcionamiento ni uses la app de forma que viole la ley aplicable o los derechos de otra persona."]},
+        {h:"10. Descargo y limitación de responsabilidad",b:["BabyDays se ofrece tal cual y según disponibilidad. En la máxima medida permitida por la ley, no somos responsables de daños indirectos, incidentales, consecuentes, especiales o punitivos, ni por pérdida de datos, recordatorios omitidos, entradas inexactas o decisiones tomadas según contenido de la app."]},
+        {h:"11. Cambios en estos Terms",b:["Podemos actualizar estos Terms cuando la app o los requisitos legales cambien. El uso continuado de BabyDays después de cambios significa que aceptas los Terms actualizados."]},
+        {h:"12. Contacto",c:true,b:["¿Preguntas sobre estos Terms? Contáctanos en {{email}}."]}
+      ],
+      pt: [
+        {h:"1. Aceitação",b:["Ao baixar, acessar ou usar o BabyDays, você concorda com estes Terms of Service. Se não concordar, não use o app."]},
+        {h:"2. O que BabyDays faz",b:["BabyDays ajuda pais e cuidadores a registrar momentos de cuidado do bebê, como alimentação, sono, fraldas, crescimento, marcos, notas de medicação, notas de passagem, lembretes e check-ins dos pais."]},
+        {h:"3. Não é conselho médico",b:["BabyDays não é um dispositivo médico e não fornece diagnóstico, tratamento, instruções de medicação, orientação de emergência ou aconselhamento profissional de saúde. Consulte sempre um profissional qualificado para questões médicas. Em emergências, contate imediatamente os serviços locais de emergência."]},
+        {h:"4. Sua responsabilidade",b:[["Você é responsável pela precisão das informações que insere.","Você deve revisar lembretes, registros, resumos e exportações antes de confiar neles.","Você não deve usar BabyDays como única fonte para decisões de medicação, alimentação ou saúde."]]},
+        {h:"5. Armazenamento local e backups",b:["BabyDays é offline-first. Dados locais podem ser perdidos se o app for excluído, o dispositivo danificado ou o armazenamento limpo. Se recursos de exportação ou backup estiverem disponíveis, você é responsável por guardar os arquivos exportados com segurança."]},
+        {h:"6. Compras premium",b:["BabyDays pode oferecer compras premium mensais, anuais, vitalícias ou outras. Preços, moedas, testes, renovações, reembolsos e cancelamento são tratados pela Apple App Store ou Google Play e exibidos pela loja no momento da compra.","Assinaturas renovam automaticamente salvo cancelamento pela sua conta da loja antes da data de renovação. Não podemos cancelar assinaturas diretamente nem emitir reembolsos fora do processo da plataforma."]},
+        {h:"7. Disponibilidade de recursos",b:["Podemos melhorar, adicionar, remover ou alterar recursos ao longo do tempo. Buscamos não remover intencionalmente direitos pagos ativos sem uma substituição razoável ou tratamento suportado pela plataforma."]},
+        {h:"8. Serviços de terceiros",b:["BabyDays pode interagir com Apple App Store, Google Play, Firebase, apps de email, provedores de arquivos, apps de armazenamento em nuvem, apps de mensagens e outros apps que você escolher para compartilhar ou exportar. Serviços de terceiros são regidos por seus próprios termos e políticas de privacidade."]},
+        {h:"9. Uso aceitável",b:["Não use BabyDays indevidamente, não tente fazer engenharia reversa de partes restritas do app, não interfira na operação do app e não use o app de forma que viole a lei aplicável ou direitos de outra pessoa."]},
+        {h:"10. Isenção e limitação de responsabilidade",b:["BabyDays é fornecido no estado em que se encontra e conforme disponível. Na máxima medida permitida por lei, não somos responsáveis por danos indiretos, incidentais, consequenciais, especiais ou punitivos, nem por perda de dados, lembretes perdidos, entradas imprecisas ou decisões baseadas no conteúdo do app."]},
+        {h:"11. Alterações nestes Terms",b:["Podemos atualizar estes Terms quando o app ou requisitos legais mudarem. O uso contínuo do BabyDays após mudanças significa que você aceita os Terms atualizados."]},
+        {h:"12. Contato",c:true,b:["Perguntas sobre estes Terms? Entre em contato em {{email}}."]}
+      ],
+      fr: [
+        {h:"1. Acceptation",b:["En téléchargeant, accédant à ou utilisant BabyDays, vous acceptez ces Terms of Service. Si vous n'êtes pas d'accord, n'utilisez pas l'app."]},
+        {h:"2. Ce que fait BabyDays",b:["BabyDays aide les parents et aidants à enregistrer les moments de soins du bébé, comme l'alimentation, le sommeil, les couches, la croissance, les étapes, les notes de médicaments, les notes de relais, les rappels et les check-ins des parents."]},
+        {h:"3. Pas un conseil médical",b:["BabyDays n'est pas un dispositif médical et ne fournit pas de diagnostic, de traitement, d'instructions de médication, de guide d'urgence ni de conseil médical professionnel. Consultez toujours un professionnel de santé qualifié pour les questions médicales. En urgence, contactez immédiatement les services d'urgence locaux."]},
+        {h:"4. Votre responsabilité",b:[["Vous êtes responsable de l'exactitude des informations saisies.","Vous devez vérifier les rappels, journaux, résumés et exports avant de vous y fier.","Vous ne devez pas utiliser BabyDays comme seule source pour les décisions de médication, d'alimentation ou médicales."]]},
+        {h:"5. Stockage local et sauvegardes",b:["BabyDays est offline-first. Les données locales peuvent être perdues si l'app est supprimée, l'appareil endommagé ou le stockage effacé. Si des fonctions d'export ou de sauvegarde existent, vous êtes responsable de conserver les fichiers exportés en sécurité."]},
+        {h:"6. Achats premium",b:["BabyDays peut proposer des achats premium mensuels, annuels, à vie ou autres. Les prix, devises, essais, renouvellements, remboursements et annulations sont gérés par Apple App Store ou Google Play et affichés par la boutique au moment de l'achat.","Les abonnements se renouvellent automatiquement sauf annulation depuis votre compte de boutique avant la date de renouvellement. Nous ne pouvons pas annuler directement les abonnements ni émettre de remboursements hors du processus de la plateforme."]},
+        {h:"7. Disponibilité des fonctions",b:["Nous pouvons améliorer, ajouter, retirer ou modifier des fonctions au fil du temps. Nous cherchons à ne pas retirer intentionnellement des droits payants actifs sans remplacement raisonnable ou traitement pris en charge par la plateforme."]},
+        {h:"8. Services tiers",b:["BabyDays peut interagir avec Apple App Store, Google Play, Firebase, des apps email, fournisseurs de fichiers, apps de stockage cloud, apps de messagerie et autres apps que vous choisissez pour partager ou exporter. Les services tiers sont régis par leurs propres conditions et politiques de confidentialité."]},
+        {h:"9. Utilisation acceptable",b:["N'abusez pas de BabyDays, ne tentez pas de faire de l'ingénierie inverse sur les parties restreintes, n'interférez pas avec le fonctionnement de l'app et n'utilisez pas l'app d'une manière violant la loi applicable ou les droits d'autrui."]},
+        {h:"10. Avertissement et limitation de responsabilité",b:["BabyDays est fourni tel quel et selon disponibilité. Dans la mesure maximale permise par la loi, nous ne sommes pas responsables des dommages indirects, accessoires, consécutifs, spéciaux ou punitifs, ni de la perte de données, rappels manqués, entrées inexactes ou décisions fondées sur le contenu de l'app."]},
+        {h:"11. Modifications de ces Terms",b:["Nous pouvons mettre à jour ces Terms lorsque l'app ou les exigences légales changent. Continuer à utiliser BabyDays après les changements signifie que vous acceptez les Terms mis à jour."]},
+        {h:"12. Contact",c:true,b:["Questions sur ces Terms ? Contactez-nous à {{email}}."]}
+      ],
+      de: [
+        {h:"1. Annahme",b:["Durch Herunterladen, Zugriff oder Nutzung von BabyDays stimmst du diesen Terms of Service zu. Wenn du nicht zustimmst, nutze die App nicht."]},
+        {h:"2. Was BabyDays macht",b:["BabyDays hilft Eltern und Pflegepersonen, Baby-Pflegemomente wie Füttern, Schlaf, Windeln, Wachstum, Meilensteine, Medikamentennotizen, Übergabenotizen, Erinnerungen und Eltern-Check-ins zu erfassen."]},
+        {h:"3. Keine medizinische Beratung",b:["BabyDays ist kein Medizinprodukt und bietet keine medizinische Diagnose, Behandlung, Medikamentenanweisungen, Notfallhilfe oder professionelle Gesundheitsberatung. Wende dich bei medizinischen Fragen immer an qualifiziertes Fachpersonal. In Notfällen kontaktiere sofort lokale Notfalldienste."]},
+        {h:"4. Deine Verantwortung",b:[["Du bist für die Richtigkeit der eingegebenen Informationen verantwortlich.","Du solltest Erinnerungen, Protokolle, Zusammenfassungen und Exporte prüfen, bevor du dich darauf verlässt.","Du solltest BabyDays nicht als einzige Quelle für Medikamenten-, Fütterungs- oder medizinische Entscheidungen verwenden."]]},
+        {h:"5. Lokale Speicherung und Backups",b:["BabyDays ist offline-first. Lokale Daten können verloren gehen, wenn die App gelöscht, das Gerät beschädigt oder der Gerätespeicher gelöscht wird. Wenn Export- oder Backup-Funktionen verfügbar sind, bist du für die sichere Aufbewahrung exportierter Dateien verantwortlich."]},
+        {h:"6. Premium-Käufe",b:["BabyDays kann monatliche, jährliche, lebenslange oder andere Premium-Käufe anbieten. Preise, Währungen, Tests, Verlängerungen, Erstattungen und Kündigungen werden von Apple App Store oder Google Play verarbeitet und beim Kauf im Store angezeigt.","Abonnements verlängern sich automatisch, sofern sie nicht vor dem Verlängerungsdatum über dein Store-Konto gekündigt werden. Wir können Abonnements nicht direkt außerhalb des Plattformprozesses kündigen oder erstatten."]},
+        {h:"7. Funktionsverfügbarkeit",b:["Wir können Funktionen im Laufe der Zeit verbessern, hinzufügen, entfernen oder ändern. Wir bemühen uns, aktive bezahlte Berechtigungen nicht absichtlich ohne angemessenen Ersatz oder plattformgestützte Behandlung zu entfernen."]},
+        {h:"8. Drittanbieterdienste",b:["BabyDays kann mit Apple App Store, Google Play, Firebase, E-Mail-Apps, Dateianbietern, Cloud-Speicher-Apps, Messaging-Apps und anderen von dir zum Teilen oder Exportieren gewählten Apps interagieren. Drittanbieterdienste unterliegen ihren eigenen Bedingungen und Datenschutzrichtlinien."]},
+        {h:"9. Zulässige Nutzung",b:["Missbrauche BabyDays nicht, versuche nicht, eingeschränkte Teile der App zurückzuentwickeln, störe nicht den Betrieb der App und nutze die App nicht in einer Weise, die geltendes Recht oder Rechte anderer verletzt."]},
+        {h:"10. Haftungsausschluss und -begrenzung",b:["BabyDays wird wie besehen und nach Verfügbarkeit bereitgestellt. Soweit gesetzlich zulässig, haften wir nicht für indirekte, zufällige, Folge-, besondere oder Strafschäden oder für Datenverlust, verpasste Erinnerungen, ungenaue Einträge oder Entscheidungen auf Grundlage von App-Inhalten."]},
+        {h:"11. Änderungen dieser Terms",b:["Wir können diese Terms aktualisieren, wenn sich die App oder rechtliche Anforderungen ändern. Die weitere Nutzung von BabyDays nach Änderungen bedeutet, dass du die aktualisierten Terms akzeptierst."]},
+        {h:"12. Kontakt",c:true,b:["Fragen zu diesen Terms? Kontaktiere uns unter {{email}}."]}
+      ],
+      ar: [
+        {h:"1. القبول",b:["بتنزيل BabyDays أو الوصول إليه أو استخدامه، فإنك توافق على Terms of Service هذه. إذا كنت لا توافق، فلا تستخدم التطبيق."]},
+        {h:"2. ما الذي يفعله BabyDays",b:["يساعد BabyDays الوالدين ومقدمي الرعاية على تسجيل لحظات رعاية الطفل مثل الرضاعة والنوم والحفاضات والنمو والمراحل وملاحظات الدواء وملاحظات التسليم والتذكيرات وتسجيلات حالة الوالدين."]},
+        {h:"3. ليس نصيحة طبية",b:["BabyDays ليس جهازًا طبيًا ولا يقدم تشخيصًا طبيًا أو علاجًا أو تعليمات دواء أو إرشادًا طارئًا أو نصيحة صحية مهنية. استشر دائمًا متخصصًا صحيًا مؤهلًا للأسئلة الطبية. في حالات الطوارئ، اتصل فورًا بخدمات الطوارئ المحلية."]},
+        {h:"4. مسؤوليتك",b:[["أنت مسؤول عن دقة المعلومات التي تدخلها.","يجب عليك مراجعة التذكيرات والسجلات والملخصات وعمليات التصدير قبل الاعتماد عليها.","يجب ألا تستخدم BabyDays كمصدر وحيد لقرارات الدواء أو الرضاعة أو القرارات الطبية."]]},
+        {h:"5. التخزين المحلي والنسخ الاحتياطي",b:["BabyDays يعمل دون اتصال أولًا. قد تضيع البيانات المحلية إذا تم حذف التطبيق أو تلف الجهاز أو مسح تخزين الجهاز. إذا توفرت ميزات التصدير أو النسخ الاحتياطي، فأنت مسؤول عن حفظ الملفات المصدرة بأمان."]},
+        {h:"6. مشتريات premium",b:["قد يقدم BabyDays مشتريات premium شهرية أو سنوية أو مدى الحياة أو غيرها. تتم معالجة الأسعار والعملات والتجارب والتجديدات والاستردادات والإلغاء عبر Apple App Store أو Google Play وتعرضها المتجر وقت الشراء.","تتجدد الاشتراكات تلقائيًا ما لم تلغها من حساب المتجر قبل تاريخ التجديد. لا يمكننا إلغاء الاشتراكات مباشرة أو إصدار الاستردادات خارج عملية المنصة."]},
+        {h:"7. توفر الميزات",b:["قد نحسن الميزات أو نضيفها أو نزيلها أو نغيرها بمرور الوقت. نسعى إلى عدم إزالة الاستحقاقات المدفوعة النشطة عمدًا دون بديل معقول أو معالجة مدعومة من المنصة."]},
+        {h:"8. خدمات الطرف الثالث",b:["قد يتفاعل BabyDays مع Apple App Store و Google Play و Firebase وتطبيقات البريد ومزودي الملفات وتطبيقات التخزين السحابي وتطبيقات المراسلة وتطبيقات أخرى تختارها للمشاركة أو التصدير. تخضع خدمات الطرف الثالث لشروطها وسياسات الخصوصية الخاصة بها."]},
+        {h:"9. الاستخدام المقبول",b:["لا تسيء استخدام BabyDays، ولا تحاول الهندسة العكسية للأجزاء المقيدة من التطبيق، ولا تتدخل في تشغيله، ولا تستخدمه بطريقة تنتهك القانون المعمول به أو حقوق شخص آخر."]},
+        {h:"10. إخلاء المسؤولية وحدودها",b:["يتم تقديم BabyDays كما هو وحسب التوفر. إلى أقصى حد يسمح به القانون، لا نتحمل مسؤولية الأضرار غير المباشرة أو العرضية أو التبعية أو الخاصة أو العقابية، أو فقدان البيانات أو التذكيرات الفائتة أو الإدخالات غير الدقيقة أو القرارات المتخذة بناءً على محتوى التطبيق."]},
+        {h:"11. تغييرات Terms",b:["قد نحدث Terms هذه عندما يتغير التطبيق أو المتطلبات القانونية. استمرار استخدام BabyDays بعد التغييرات يعني أنك تقبل Terms المحدثة."]},
+        {h:"12. التواصل",c:true,b:["هل لديك أسئلة حول Terms هذه؟ تواصل معنا عبر {{email}}."]}
+      ]
+    };
+
+    function renderSections(code) {
+      const selected = sections[code] || sections.en;
+      const email = '<a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a>';
+      document.getElementById("sc").innerHTML = selected.map((section) => {
+        const body = section.b.map((node) => Array.isArray(node)
+          ? `<ul>${node.map((item) => `<li>${item}</li>`).join("")}</ul>`
+          : `<p>${node.replace("{{email}}", email)}</p>`
+        ).join("");
+        if (!section.c) return `<section><h2>${section.h}</h2>${body}</section>`;
+        return `<section class="cta-card"><div class="cta-row"><div><h2>${section.h}</h2>${body}</div><a class="button" href="mailto:khanhquang29000@gmail.com?subject=BabyDays%20Terms%20Question">Email us</a></div></section>`;
+      }).join("");
+    }
+
+    const select = document.getElementById("languageSelect");
+    const browserLanguage = (navigator.language || "en").slice(0, 2).toLowerCase();
+    const initialLanguage = copy[browserLanguage] ? browserLanguage : "en";
+
+    for (const [code, label] of languages) {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = label;
+      select.appendChild(option);
+    }
+
+    function renderLanguage(code) {
+      const item = copy[code] || copy.en;
+      document.documentElement.lang = code;
+      document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
+      document.getElementById("languageTitle").textContent = item.title;
+      document.getElementById("languageSubtitle").textContent = item.subtitle;
+      document.getElementById("localizedSummary").textContent = item.summary;
+      document.getElementById("legalNote").textContent = item.note;
+      select.value = code;
+      renderSections(code);
+    }
+
+    select.addEventListener("change", (event) => renderLanguage(event.target.value));
+    renderLanguage(initialLanguage);
+  </script>
 </body>
 </html>

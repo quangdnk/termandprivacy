@@ -60,6 +60,11 @@
     .button:hover { text-decoration: none; filter: brightness(1.05); }
     nav { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
     nav a { padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); font-weight: 800; }
+    .language-card { background: linear-gradient(145deg, rgba(142,197,255,.13), rgba(25,19,22,.78)); }
+    .language-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    select { min-width: 230px; border: 1px solid var(--line); border-radius: 14px; background: var(--elevated); color: var(--text); padding: 12px 14px; font: inherit; font-weight: 800; }
+    .localized-summary { margin: 16px 0 0; color: var(--text); }
+    .legal-note { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
     footer { margin-top: 28px; color: var(--muted); font-size: 13px; text-align: center; }
     @media (max-width: 720px) { main { padding-top: 28px; } header, section { padding: 20px; border-radius: 22px; } .grid { grid-template-columns: 1fr; } }
 
@@ -79,69 +84,276 @@
       </nav>
     </header>
 
-    <section>
-      <h2>1. Overview</h2>
-      <p>BabyDays is a baby care tracking app for logging feeding, sleep, diaper changes, growth, milestones, medicine notes, handoff notes, and parent check-ins. We design BabyDays to be calm, privacy-conscious, and useful at tired moments.</p>
-      <p><strong>Important:</strong> BabyDays is not a medical device and does not provide medical diagnosis, treatment, or emergency advice.</p>
-    </section>
-    <section>
-      <h2>2. Information you may enter</h2>
-      <ul>
-        <li><strong>Baby profile:</strong> baby name, birth date, and optional profile details.</li>
-        <li><strong>Care logs:</strong> feeding, sleep, diaper, growth, medicine, milestone, handoff, and note entries.</li>
-        <li><strong>Parent check-ins:</strong> mood and energy entries that you choose to record.</li>
-        <li><strong>Settings:</strong> language, unit preferences, dark mode, reminders, and premium entitlement state.</li>
-        <li><strong>Support emails:</strong> if you contact us, we receive your email address, message, and any details you include.</li>
-      </ul>
-    </section>
-    <section>
-      <h2>3. Local-first storage</h2>
-      <p>BabyDays stores care data primarily on your device using local storage. In the current offline-first design, your baby logs, parent check-ins, notes, and milestones are not uploaded to a BabyDays server by default.</p>
-      <p>If you share, export, email, save to Files, or open content in another app, the selected third-party app or service may receive the data you choose to share.</p>
-    </section>
-    <section>
-      <h2>4. Notifications</h2>
-      <p>BabyDays may ask permission to schedule local reminders, such as a next feeding reminder. Local notifications are scheduled on your device. Remote notifications may be added only if cloud/family sync features are introduced and tested later.</p>
-    </section>
-    <section>
-      <h2>5. Purchases and subscriptions</h2>
-      <p>Premium purchases are handled by Apple App Store or Google Play. We do not receive or store your full payment card details. We may store a local premium entitlement flag so the app can unlock purchased features.</p>
-    </section>
-    <section>
-      <h2>6. Analytics, diagnostics, and Firebase</h2>
-      <p>BabyDays may use Firebase or similar services for analytics, crash diagnostics, and messaging if enabled in a production build. These services may process technical information such as device type, OS version, app version, crash logs, event names, and notification tokens. We do not intentionally upload your local baby care logs or parent check-in content to analytics.</p>
-    </section>
-    <section>
-      <h2>7. No ads and no sale of data</h2>
-      <p>BabyDays is designed with no ads. We do not sell your personal data.</p>
-    </section>
-    <section>
-      <h2>8. Children and family data</h2>
-      <p>BabyDays is intended for parents, guardians, and caregivers. Because baby and family care data can be sensitive, please avoid entering information you do not want stored on the device or shared through exports.</p>
-    </section>
-    <section>
-      <h2>9. Data deletion</h2>
-      <p>You can remove app data by deleting logs where available, clearing app data through your device settings, or uninstalling the app. If you contacted us by email, you can request deletion of support correspondence where legally possible.</p>
-    </section>
-    <section>
-      <h2>10. International processing</h2>
-      <p>Support email providers, Apple, Google, Firebase, and other service providers may process technical or support information in countries other than where you live.</p>
-    </section>
-    <section>
-      <h2>11. Changes</h2>
-      <p>We may update this Privacy Policy when BabyDays changes. The updated date at the top shows the latest version.</p>
-    </section>
-    <section class="cta-card">
-      <div class="cta-row">
+    <section class="language-card" aria-label="Language selector">
+      <div class="language-row">
         <div>
-          <h2>12. Contact</h2>
-          <p>If you have privacy questions or requests, contact us at <a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a>.</p>
+          <h2 id="languageTitle">Read in your language</h2>
+          <p class="meta" id="languageSubtitle">The English version is the official legal text.</p>
         </div>
-        <a class="button" href="mailto:khanhquang29000@gmail.com?subject=BabyDays%20Privacy%20Request">Email us</a>
+        <label>
+          <span class="eyebrow">Language</span><br>
+          <select id="languageSelect" aria-label="Select language"></select>
+        </label>
       </div>
+      <p class="localized-summary" id="localizedSummary"></p>
+      <p class="legal-note" id="legalNote"></p>
     </section>
+
+    <div id="sc"></div>
 
     <footer>BabyDays · Contact: <a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a></footer>
   </main>
+  <script>
+    const languages = [
+      ["en", "English"], ["vi", "Tiếng Việt"], ["ja", "日本語"], ["ko", "한국어"],
+      ["zh", "简体中文"], ["es", "Español"], ["pt", "Português"], ["fr", "Français"],
+      ["de", "Deutsch"], ["ar", "العربية"]
+    ];
+
+    const copy = {
+      en: {
+        title: "Read in your language",
+        subtitle: "The English version is the official legal text.",
+        summary: "BabyDays is designed to keep baby care logs local on your device by default. You can record feeding, sleep, diapers, growth, milestones, medicine notes, handoff notes, and parent check-ins. The app has no ads, does not sell personal data, and may use Apple, Google, Firebase, or email services for purchases, diagnostics, messaging, and support.",
+        note: "This localized text is provided for convenience. If it conflicts with the English Privacy Policy, the English version controls."
+      },
+      vi: {
+        title: "Đọc bằng ngôn ngữ của bạn",
+        subtitle: "Bản tiếng Anh là văn bản pháp lý chính thức.",
+        summary: "BabyDays được thiết kế để lưu nhật ký chăm sóc bé trên thiết bị của bạn theo mặc định. Bạn có thể ghi lại bú, ngủ, tã, tăng trưởng, mốc phát triển, ghi chú thuốc, ghi chú bàn giao và check-in của phụ huynh. Ứng dụng không có quảng cáo, không bán dữ liệu cá nhân, và có thể dùng Apple, Google, Firebase hoặc dịch vụ email cho thanh toán, chẩn đoán, nhắn tin và hỗ trợ.",
+        note: "Bản tiếng Việt này nhằm giúp người dùng dễ hiểu. Nếu có khác biệt, bản Privacy Policy tiếng Anh sẽ được áp dụng."
+      },
+      ja: {
+        title: "あなたの言語で読む",
+        subtitle: "英語版が正式な法的文書です。",
+        summary: "BabyDays は、赤ちゃんのケア記録を標準で端末内に保存する設計です。授乳、睡眠、おむつ、成長、マイルストーン、薬のメモ、引き継ぎメモ、保護者のチェックインを記録できます。広告はなく、個人データを販売しません。購入、診断、メッセージ、サポートのために Apple、Google、Firebase、メールサービスを利用する場合があります。",
+        note: "この日本語テキストは便宜のために提供されています。英語の Privacy Policy と相違がある場合は英語版が優先されます。"
+      },
+      ko: {
+        title: "내 언어로 읽기",
+        subtitle: "영어 버전이 공식 법적 문서입니다.",
+        summary: "BabyDays는 아기 돌봄 기록을 기본적으로 기기에 로컬 저장하도록 설계되었습니다. 수유, 수면, 기저귀, 성장, 발달 이정표, 약 메모, 인계 메모, 부모 체크인을 기록할 수 있습니다. 앱에는 광고가 없고 개인 데이터를 판매하지 않으며, 구매, 진단, 메시징, 지원을 위해 Apple, Google, Firebase 또는 이메일 서비스를 사용할 수 있습니다.",
+        note: "이 한국어 텍스트는 편의를 위한 것입니다. 영어 Privacy Policy와 충돌하는 경우 영어 버전이 우선합니다."
+      },
+      zh: {
+        title: "使用你的语言阅读",
+        subtitle: "英文版本为正式法律文本。",
+        summary: "BabyDays 默认将宝宝护理记录保存在你的设备本地。你可以记录喂养、睡眠、尿布、成长、里程碑、用药备注、交接备注和家长状态记录。本应用无广告，不出售个人数据，并可能使用 Apple、Google、Firebase 或邮件服务处理购买、诊断、消息和支持。",
+        note: "本中文文本仅为方便阅读。如与英文 Privacy Policy 冲突，以英文版本为准。"
+      },
+      es: {
+        title: "Leer en tu idioma",
+        subtitle: "La versión en inglés es el texto legal oficial.",
+        summary: "BabyDays está diseñado para mantener los registros de cuidado del bebé en tu dispositivo de forma predeterminada. Puedes registrar alimentación, sueño, pañales, crecimiento, hitos, notas de medicina, notas de relevo y check-ins de los padres. La app no tiene anuncios, no vende datos personales y puede usar Apple, Google, Firebase o servicios de email para compras, diagnósticos, mensajes y soporte.",
+        note: "Este texto localizado se ofrece por comodidad. Si entra en conflicto con la Privacy Policy en inglés, prevalece la versión en inglés."
+      },
+      pt: {
+        title: "Ler no seu idioma",
+        subtitle: "A versão em inglês é o texto jurídico oficial.",
+        summary: "O BabyDays foi criado para manter os registros de cuidado do bebê localmente no seu dispositivo por padrão. Você pode registrar alimentação, sono, fraldas, crescimento, marcos, notas de medicação, notas de passagem e check-ins dos pais. O app não tem anúncios, não vende dados pessoais e pode usar Apple, Google, Firebase ou serviços de email para compras, diagnósticos, mensagens e suporte.",
+        note: "Este texto localizado é fornecido por conveniência. Em caso de conflito com a Privacy Policy em inglês, a versão em inglês prevalece."
+      },
+      fr: {
+        title: "Lire dans votre langue",
+        subtitle: "La version anglaise est le texte juridique officiel.",
+        summary: "BabyDays est conçu pour conserver par défaut les journaux de soins du bébé sur votre appareil. Vous pouvez enregistrer l'alimentation, le sommeil, les couches, la croissance, les étapes, les notes de médicaments, les notes de relais et les check-ins des parents. L'app n'a pas de publicité, ne vend pas les données personnelles et peut utiliser Apple, Google, Firebase ou des services email pour les achats, diagnostics, messages et support.",
+        note: "Ce texte localisé est fourni pour votre confort. En cas de conflit avec la Privacy Policy en anglais, la version anglaise prévaut."
+      },
+      de: {
+        title: "In deiner Sprache lesen",
+        subtitle: "Die englische Version ist der offizielle Rechtstext.",
+        summary: "BabyDays ist so gestaltet, dass Baby-Pflegedaten standardmäßig lokal auf deinem Gerät bleiben. Du kannst Füttern, Schlaf, Windeln, Wachstum, Meilensteine, Medikamentennotizen, Übergabenotizen und Eltern-Check-ins erfassen. Die App enthält keine Werbung, verkauft keine personenbezogenen Daten und kann Apple, Google, Firebase oder E-Mail-Dienste für Käufe, Diagnosen, Nachrichten und Support nutzen.",
+        note: "Dieser lokalisierte Text dient der Verständlichkeit. Bei Widersprüchen zur englischen Privacy Policy gilt die englische Version."
+      },
+      ar: {
+        title: "اقرأ بلغتك",
+        subtitle: "النسخة الإنجليزية هي النص القانوني الرسمي.",
+        summary: "تم تصميم BabyDays ليحفظ سجلات رعاية الطفل محليًا على جهازك افتراضيًا. يمكنك تسجيل الرضاعة والنوم والحفاضات والنمو والمراحل وملاحظات الدواء وملاحظات التسليم وتسجيلات حالة الوالدين. لا يحتوي التطبيق على إعلانات ولا يبيع البيانات الشخصية، وقد يستخدم Apple أو Google أو Firebase أو خدمات البريد الإلكتروني للمشتريات والتشخيص والرسائل والدعم.",
+        note: "هذا النص المترجم للتسهيل فقط. إذا تعارض مع Privacy Policy الإنجليزية، فإن النسخة الإنجليزية هي المعتمدة."
+      }
+    };
+
+    const sections = {
+      en: [
+        {h:"1. Overview",b:["BabyDays is a baby care tracking app for logging feeding, sleep, diaper changes, growth, milestones, medicine notes, handoff notes, and parent check-ins. We design BabyDays to be calm, privacy-conscious, and useful at tired moments.","<strong>Important:</strong> BabyDays is not a medical device and does not provide medical diagnosis, treatment, or emergency advice."]},
+        {h:"2. Information you may enter",b:[["<strong>Baby profile:</strong> baby name, birth date, and optional profile details.","<strong>Care logs:</strong> feeding, sleep, diaper, growth, medicine, milestone, handoff, and note entries.","<strong>Parent check-ins:</strong> mood and energy entries that you choose to record.","<strong>Settings:</strong> language, unit preferences, dark mode, reminders, and premium entitlement state.","<strong>Support emails:</strong> if you contact us, we receive your email address, message, and any details you include."]]},
+        {h:"3. Local-first storage",b:["BabyDays stores care data primarily on your device using local storage. In the current offline-first design, your baby logs, parent check-ins, notes, and milestones are not uploaded to a BabyDays server by default.","If you share, export, email, save to Files, or open content in another app, the selected third-party app or service may receive the data you choose to share."]},
+        {h:"4. Notifications",b:["BabyDays may ask permission to schedule local reminders, such as a next feeding reminder. Local notifications are scheduled on your device. Remote notifications may be added only if cloud/family sync features are introduced and tested later."]},
+        {h:"5. Purchases and subscriptions",b:["Premium purchases are handled by Apple App Store or Google Play. We do not receive or store your full payment card details. We may store a local premium entitlement flag so the app can unlock purchased features."]},
+        {h:"6. Analytics, diagnostics, and Firebase",b:["BabyDays may use Firebase or similar services for analytics, crash diagnostics, and messaging if enabled in a production build. These services may process technical information such as device type, OS version, app version, crash logs, event names, and notification tokens. We do not intentionally upload your local baby care logs or parent check-in content to analytics."]},
+        {h:"7. No ads and no sale of data",b:["BabyDays is designed with no ads. We do not sell your personal data."]},
+        {h:"8. Children and family data",b:["BabyDays is intended for parents, guardians, and caregivers. Because baby and family care data can be sensitive, please avoid entering information you do not want stored on the device or shared through exports."]},
+        {h:"9. Data deletion",b:["You can remove app data by deleting logs where available, clearing app data through your device settings, or uninstalling the app. If you contacted us by email, you can request deletion of support correspondence where legally possible."]},
+        {h:"10. International processing",b:["Support email providers, Apple, Google, Firebase, and other service providers may process technical or support information in countries other than where you live."]},
+        {h:"11. Changes",b:["We may update this Privacy Policy when BabyDays changes. The updated date at the top shows the latest version."]},
+        {h:"12. Contact",c:true,b:["If you have privacy questions or requests, contact us at {{email}}."]}
+      ],
+      vi: [
+        {h:"1. Tổng quan",b:["BabyDays là ứng dụng theo dõi chăm sóc em bé để ghi lại bú, ngủ, thay tã, tăng trưởng, mốc phát triển, ghi chú thuốc, ghi chú bàn giao và check-in của phụ huynh. Chúng tôi thiết kế BabyDays để nhẹ nhàng, tôn trọng quyền riêng tư và hữu ích trong những lúc mệt mỏi.","<strong>Quan trọng:</strong> BabyDays không phải là thiết bị y tế và không cung cấp chẩn đoán, điều trị hoặc tư vấn khẩn cấp."]},
+        {h:"2. Thông tin bạn có thể nhập",b:[["<strong>Hồ sơ bé:</strong> tên bé, ngày sinh và các chi tiết hồ sơ tùy chọn.","<strong>Nhật ký chăm sóc:</strong> các mục về bú, ngủ, tã, tăng trưởng, thuốc, mốc phát triển, bàn giao và ghi chú.","<strong>Check-in của phụ huynh:</strong> tâm trạng và mức năng lượng mà bạn chọn ghi lại.","<strong>Cài đặt:</strong> ngôn ngữ, đơn vị đo, chế độ tối, nhắc nhở và trạng thái quyền premium.","<strong>Email hỗ trợ:</strong> nếu bạn liên hệ với chúng tôi, chúng tôi nhận địa chỉ email, nội dung tin nhắn và các chi tiết bạn gửi kèm."]]},
+        {h:"3. Lưu trữ ưu tiên trên thiết bị",b:["BabyDays lưu dữ liệu chăm sóc chủ yếu trên thiết bị của bạn bằng bộ nhớ cục bộ. Trong thiết kế offline-first hiện tại, nhật ký của bé, check-in của phụ huynh, ghi chú và mốc phát triển không được tải lên máy chủ BabyDays theo mặc định.","Nếu bạn chia sẻ, xuất, gửi email, lưu vào Files hoặc mở nội dung bằng ứng dụng khác, ứng dụng hoặc dịch vụ bên thứ ba đó có thể nhận dữ liệu bạn chọn chia sẻ."]},
+        {h:"4. Thông báo",b:["BabyDays có thể xin quyền lên lịch nhắc nhở cục bộ, chẳng hạn nhắc lần bú tiếp theo. Thông báo cục bộ được lên lịch trên thiết bị của bạn. Thông báo từ xa chỉ có thể được thêm sau này nếu tính năng đồng bộ đám mây/gia đình được giới thiệu và kiểm thử."]},
+        {h:"5. Mua hàng và subscription",b:["Các gói premium được xử lý bởi Apple App Store hoặc Google Play. Chúng tôi không nhận hoặc lưu đầy đủ thông tin thẻ thanh toán của bạn. Ứng dụng có thể lưu cục bộ trạng thái quyền premium để mở khóa tính năng đã mua."]},
+        {h:"6. Analytics, chẩn đoán và Firebase",b:["BabyDays có thể dùng Firebase hoặc dịch vụ tương tự cho analytics, chẩn đoán crash và messaging nếu được bật trong bản production. Các dịch vụ này có thể xử lý thông tin kỹ thuật như loại thiết bị, phiên bản hệ điều hành, phiên bản app, crash log, tên sự kiện và token thông báo. Chúng tôi không cố ý tải nhật ký chăm sóc bé hoặc nội dung check-in của phụ huynh lên analytics."]},
+        {h:"7. Không quảng cáo và không bán dữ liệu",b:["BabyDays được thiết kế không có quảng cáo. Chúng tôi không bán dữ liệu cá nhân của bạn."]},
+        {h:"8. Trẻ em và dữ liệu gia đình",b:["BabyDays dành cho cha mẹ, người giám hộ và người chăm sóc. Vì dữ liệu chăm sóc em bé và gia đình có thể nhạy cảm, vui lòng tránh nhập thông tin mà bạn không muốn lưu trên thiết bị hoặc chia sẻ qua file xuất."]},
+        {h:"9. Xóa dữ liệu",b:["Bạn có thể xóa dữ liệu app bằng cách xóa nhật ký khi có tính năng, xóa dữ liệu app trong cài đặt thiết bị hoặc gỡ cài đặt app. Nếu đã liên hệ qua email, bạn có thể yêu cầu xóa thư hỗ trợ khi pháp luật cho phép."]},
+        {h:"10. Xử lý quốc tế",b:["Nhà cung cấp email hỗ trợ, Apple, Google, Firebase và các nhà cung cấp dịch vụ khác có thể xử lý thông tin kỹ thuật hoặc hỗ trợ ở các quốc gia khác nơi bạn sống."]},
+        {h:"11. Thay đổi",b:["Chúng tôi có thể cập nhật Privacy Policy này khi BabyDays thay đổi. Ngày cập nhật ở đầu trang cho biết phiên bản mới nhất."]},
+        {h:"12. Liên hệ",c:true,b:["Nếu bạn có câu hỏi hoặc yêu cầu về quyền riêng tư, hãy liên hệ với chúng tôi tại {{email}}."]}
+      ],
+      ja: [
+        {h:"1. 概要",b:["BabyDays は、授乳、睡眠、おむつ交換、成長、マイルストーン、薬のメモ、引き継ぎメモ、保護者のチェックインを記録する赤ちゃんケア記録アプリです。疲れているときにも落ち着いて使え、プライバシーに配慮した設計を目指しています。","<strong>重要:</strong> BabyDays は医療機器ではなく、診断、治療、緊急時の助言を提供しません。"]},
+        {h:"2. 入力できる情報",b:[["<strong>赤ちゃんのプロフィール:</strong> 名前、生年月日、任意のプロフィール詳細。","<strong>ケア記録:</strong> 授乳、睡眠、おむつ、成長、薬、マイルストーン、引き継ぎ、メモの記録。","<strong>保護者チェックイン:</strong> あなたが記録する気分やエネルギーの項目。","<strong>設定:</strong> 言語、単位、ダークモード、リマインダー、プレミアム権限の状態。","<strong>サポートメール:</strong> お問い合わせ時には、メールアドレス、メッセージ、含めた詳細を受け取ります。"]]},
+        {h:"3. ローカル優先の保存",b:["BabyDays はケアデータを主に端末内のローカルストレージに保存します。現在のオフライン優先設計では、赤ちゃんの記録、保護者チェックイン、メモ、マイルストーンは標準で BabyDays サーバーにアップロードされません。","共有、書き出し、メール送信、Files への保存、他アプリで開く操作を行うと、選択した第三者アプリやサービスが共有対象データを受け取る場合があります。"]},
+        {h:"4. 通知",b:["BabyDays は次回授乳などのローカルリマインダーを予定するため、通知権限を求める場合があります。ローカル通知は端末上で予定されます。リモート通知は、将来クラウド同期や家族同期機能を導入して検証した場合にのみ追加される可能性があります。"]},
+        {h:"5. 購入とサブスクリプション",b:["プレミアム購入は Apple App Store または Google Play によって処理されます。当社はカード番号全体を受け取ったり保存したりしません。購入機能を解除するため、ローカルのプレミアム権限フラグを保存する場合があります。"]},
+        {h:"6. 分析、診断、Firebase",b:["BabyDays は本番ビルドで有効な場合、分析、クラッシュ診断、メッセージングのため Firebase または類似サービスを使用することがあります。これらのサービスは、端末種別、OS バージョン、アプリバージョン、クラッシュログ、イベント名、通知トークンなどの技術情報を処理する場合があります。赤ちゃんのケア記録や保護者チェックイン内容を分析へ意図的にアップロードすることはありません。"]},
+        {h:"7. 広告なし、データ販売なし",b:["BabyDays は広告なしで設計されています。当社は個人データを販売しません。"]},
+        {h:"8. 子どもと家族データ",b:["BabyDays は保護者、後見人、ケア担当者向けです。赤ちゃんや家族のケアデータは機微な情報になり得るため、端末に保存したくない情報や書き出しで共有したくない情報は入力しないでください。"]},
+        {h:"9. データ削除",b:["利用可能な場合は記録を削除する、端末設定でアプリデータを消去する、またはアプリをアンインストールすることでアプリデータを削除できます。メールでお問い合わせいただいた場合、法的に可能な範囲でサポート correspondence の削除を依頼できます。"]},
+        {h:"10. 国際的な処理",b:["サポートメール提供者、Apple、Google、Firebase、その他のサービス提供者は、あなたの居住国以外で技術情報またはサポート情報を処理する場合があります。"]},
+        {h:"11. 変更",b:["BabyDays の変更に伴い、この Privacy Policy を更新することがあります。ページ上部の更新日が最新バージョンを示します。"]},
+        {h:"12. 連絡先",c:true,b:["プライバシーに関する質問やリクエストは {{email}} までご連絡ください。"]}
+      ],
+      ko: [
+        {h:"1. 개요",b:["BabyDays는 수유, 수면, 기저귀 교체, 성장, 발달 이정표, 약 메모, 인계 메모, 부모 체크인을 기록하는 아기 돌봄 추적 앱입니다. BabyDays는 피곤한 순간에도 차분하고 개인정보를 의식하며 유용하게 사용할 수 있도록 설계되었습니다.","<strong>중요:</strong> BabyDays는 의료기기가 아니며 의학적 진단, 치료 또는 응급 조언을 제공하지 않습니다."]},
+        {h:"2. 입력할 수 있는 정보",b:[["<strong>아기 프로필:</strong> 아기 이름, 생년월일 및 선택적 프로필 정보.","<strong>돌봄 기록:</strong> 수유, 수면, 기저귀, 성장, 약, 이정표, 인계 및 메모 항목.","<strong>부모 체크인:</strong> 사용자가 기록하기로 선택한 기분 및 에너지 항목.","<strong>설정:</strong> 언어, 단위 설정, 다크 모드, 알림 및 프리미엄 권한 상태.","<strong>지원 이메일:</strong> 문의하는 경우 이메일 주소, 메시지 및 포함한 세부 정보를 받습니다."]]},
+        {h:"3. 로컬 우선 저장",b:["BabyDays는 돌봄 데이터를 주로 기기의 로컬 저장소에 저장합니다. 현재 오프라인 우선 설계에서는 아기 기록, 부모 체크인, 메모 및 이정표가 기본적으로 BabyDays 서버에 업로드되지 않습니다.","공유, 내보내기, 이메일 전송, Files 저장 또는 다른 앱에서 열기를 선택하면, 선택한 제3자 앱 또는 서비스가 사용자가 공유하기로 선택한 데이터를 받을 수 있습니다."]},
+        {h:"4. 알림",b:["BabyDays는 다음 수유 알림과 같은 로컬 리마인더를 예약하기 위해 권한을 요청할 수 있습니다. 로컬 알림은 기기에서 예약됩니다. 원격 알림은 향후 클라우드/가족 동기화 기능이 도입되고 테스트되는 경우에만 추가될 수 있습니다."]},
+        {h:"5. 구매 및 구독",b:["프리미엄 구매는 Apple App Store 또는 Google Play에서 처리합니다. 당사는 전체 결제 카드 정보를 받거나 저장하지 않습니다. 구매 기능을 잠금 해제하기 위해 로컬 프리미엄 권한 플래그를 저장할 수 있습니다."]},
+        {h:"6. 분석, 진단 및 Firebase",b:["BabyDays는 프로덕션 빌드에서 활성화된 경우 분석, 충돌 진단 및 메시징을 위해 Firebase 또는 유사 서비스를 사용할 수 있습니다. 이러한 서비스는 기기 유형, OS 버전, 앱 버전, 충돌 로그, 이벤트 이름 및 알림 토큰과 같은 기술 정보를 처리할 수 있습니다. 당사는 로컬 아기 돌봄 기록이나 부모 체크인 내용을 분석에 의도적으로 업로드하지 않습니다."]},
+        {h:"7. 광고 없음 및 데이터 판매 없음",b:["BabyDays는 광고 없이 설계되었습니다. 당사는 개인 데이터를 판매하지 않습니다."]},
+        {h:"8. 아동 및 가족 데이터",b:["BabyDays는 부모, 보호자 및 돌봄 제공자를 위한 앱입니다. 아기 및 가족 돌봄 데이터는 민감할 수 있으므로 기기에 저장하거나 내보내기로 공유하고 싶지 않은 정보는 입력하지 마세요."]},
+        {h:"9. 데이터 삭제",b:["가능한 경우 기록을 삭제하거나, 기기 설정에서 앱 데이터를 지우거나, 앱을 제거하여 앱 데이터를 삭제할 수 있습니다. 이메일로 문의한 경우 법적으로 가능한 범위에서 지원 correspondence 삭제를 요청할 수 있습니다."]},
+        {h:"10. 국제 처리",b:["지원 이메일 제공자, Apple, Google, Firebase 및 기타 서비스 제공자는 사용자가 거주하는 국가 이외의 국가에서 기술 또는 지원 정보를 처리할 수 있습니다."]},
+        {h:"11. 변경",b:["BabyDays가 변경되면 이 Privacy Policy를 업데이트할 수 있습니다. 상단의 업데이트 날짜가 최신 버전을 나타냅니다."]},
+        {h:"12. 연락처",c:true,b:["개인정보 관련 질문이나 요청이 있으면 {{email}} 로 문의하세요."]}
+      ],
+      zh: [
+        {h:"1. 概述",b:["BabyDays 是一款宝宝护理记录应用，可记录喂养、睡眠、换尿布、成长、里程碑、用药备注、交接备注和家长状态记录。我们希望 BabyDays 在疲惫时刻也能保持平静、重视隐私并且好用。","<strong>重要:</strong> BabyDays 不是医疗设备，不提供医学诊断、治疗或紧急建议。"]},
+        {h:"2. 你可以输入的信息",b:[["<strong>宝宝资料:</strong> 宝宝姓名、出生日期和可选资料。","<strong>护理记录:</strong> 喂养、睡眠、尿布、成长、用药、里程碑、交接和备注条目。","<strong>家长状态:</strong> 你选择记录的心情和精力条目。","<strong>设置:</strong> 语言、单位偏好、深色模式、提醒和 premium 权益状态。","<strong>支持邮件:</strong> 如果你联系我们，我们会收到你的邮箱地址、消息和你包含的任何详情。"]]},
+        {h:"3. 本地优先存储",b:["BabyDays 主要使用本地存储将护理数据保存在你的设备上。在当前离线优先设计中，宝宝日志、家长状态、备注和里程碑默认不会上传到 BabyDays 服务器。","如果你分享、导出、发送邮件、保存到 Files 或在其他应用中打开内容，你选择的第三方应用或服务可能会收到你选择分享的数据。"]},
+        {h:"4. 通知",b:["BabyDays 可能会请求权限来安排本地提醒，例如下一次喂养提醒。本地通知会在你的设备上安排。只有在未来引入并测试云/家庭同步功能时，才可能添加远程通知。"]},
+        {h:"5. 购买和订阅",b:["Premium 购买由 Apple App Store 或 Google Play 处理。我们不会接收或存储你的完整付款卡信息。我们可能会保存本地 premium 权益标记，以便应用解锁已购买功能。"]},
+        {h:"6. 分析、诊断和 Firebase",b:["如果在正式版本中启用，BabyDays 可能使用 Firebase 或类似服务进行分析、崩溃诊断和消息传递。这些服务可能处理设备类型、系统版本、应用版本、崩溃日志、事件名称和通知 token 等技术信息。我们不会有意将本地宝宝护理记录或家长状态内容上传到分析服务。"]},
+        {h:"7. 无广告且不出售数据",b:["BabyDays 设计为无广告。我们不会出售你的个人数据。"]},
+        {h:"8. 儿童和家庭数据",b:["BabyDays 面向父母、监护人和护理者。由于宝宝和家庭护理数据可能较为敏感，请避免输入你不希望保存在设备上或通过导出分享的信息。"]},
+        {h:"9. 数据删除",b:["你可以在可用处删除记录、通过设备设置清除应用数据，或卸载应用来移除应用数据。如果你曾通过邮件联系我们，你可以在法律允许范围内请求删除支持通信。"]},
+        {h:"10. 国际处理",b:["支持邮件提供商、Apple、Google、Firebase 和其他服务提供商可能会在你所在国家以外的国家处理技术或支持信息。"]},
+        {h:"11. 变更",b:["当 BabyDays 发生变化时，我们可能会更新本 Privacy Policy。页面顶部的更新日期显示最新版本。"]},
+        {h:"12. 联系",c:true,b:["如果你有隐私问题或请求，请通过 {{email}} 联系我们。"]}
+      ],
+      es: [
+        {h:"1. Descripción general",b:["BabyDays es una app de seguimiento del cuidado del bebé para registrar alimentación, sueño, cambios de pañal, crecimiento, hitos, notas de medicina, notas de relevo y check-ins de los padres. Diseñamos BabyDays para que sea tranquila, consciente de la privacidad y útil en momentos de cansancio.","<strong>Importante:</strong> BabyDays no es un dispositivo médico y no proporciona diagnóstico, tratamiento ni consejos de emergencia."]},
+        {h:"2. Información que puedes introducir",b:[["<strong>Perfil del bebé:</strong> nombre, fecha de nacimiento y detalles opcionales.","<strong>Registros de cuidado:</strong> alimentación, sueño, pañal, crecimiento, medicina, hito, relevo y notas.","<strong>Check-ins de padres:</strong> entradas de ánimo y energía que elijas registrar.","<strong>Ajustes:</strong> idioma, unidades, modo oscuro, recordatorios y estado de derecho premium.","<strong>Emails de soporte:</strong> si nos contactas, recibimos tu dirección de email, mensaje y los detalles que incluyas."]]},
+        {h:"3. Almacenamiento local primero",b:["BabyDays guarda los datos de cuidado principalmente en tu dispositivo mediante almacenamiento local. En el diseño offline-first actual, tus registros del bebé, check-ins de padres, notas e hitos no se suben por defecto a un servidor de BabyDays.","Si compartes, exportas, envías por email, guardas en Files o abres contenido en otra app, la app o servicio de terceros seleccionado puede recibir los datos que decidas compartir."]},
+        {h:"4. Notificaciones",b:["BabyDays puede pedir permiso para programar recordatorios locales, como un recordatorio de la próxima toma. Las notificaciones locales se programan en tu dispositivo. Las notificaciones remotas pueden añadirse solo si en el futuro se introducen y prueban funciones de sincronización en la nube o familiar."]},
+        {h:"5. Compras y suscripciones",b:["Las compras premium son procesadas por Apple App Store o Google Play. No recibimos ni almacenamos los datos completos de tu tarjeta de pago. Podemos guardar localmente un indicador de derecho premium para desbloquear funciones compradas."]},
+        {h:"6. Analíticas, diagnósticos y Firebase",b:["BabyDays puede usar Firebase o servicios similares para analíticas, diagnóstico de fallos y mensajería si están habilitados en una versión de producción. Estos servicios pueden procesar información técnica como tipo de dispositivo, versión del sistema, versión de la app, registros de fallos, nombres de eventos y tokens de notificación. No subimos intencionalmente tus registros locales de cuidado del bebé ni contenido de check-ins de padres a analíticas."]},
+        {h:"7. Sin anuncios ni venta de datos",b:["BabyDays está diseñado sin anuncios. No vendemos tus datos personales."]},
+        {h:"8. Niños y datos familiares",b:["BabyDays está destinado a padres, tutores y cuidadores. Como los datos de cuidado del bebé y la familia pueden ser sensibles, evita introducir información que no quieras guardar en el dispositivo o compartir mediante exportaciones."]},
+        {h:"9. Eliminación de datos",b:["Puedes eliminar datos de la app borrando registros cuando esté disponible, limpiando datos de la app desde los ajustes del dispositivo o desinstalando la app. Si nos contactaste por email, puedes solicitar la eliminación de correspondencia de soporte cuando sea legalmente posible."]},
+        {h:"10. Procesamiento internacional",b:["Proveedores de email de soporte, Apple, Google, Firebase y otros proveedores de servicios pueden procesar información técnica o de soporte en países distintos al tuyo."]},
+        {h:"11. Cambios",b:["Podemos actualizar esta Privacy Policy cuando BabyDays cambie. La fecha de actualización superior muestra la versión más reciente."]},
+        {h:"12. Contacto",c:true,b:["Si tienes preguntas o solicitudes de privacidad, contáctanos en {{email}}."]}
+      ],
+      pt: [
+        {h:"1. Visão geral",b:["BabyDays é um app de acompanhamento de cuidados do bebê para registrar alimentação, sono, trocas de fralda, crescimento, marcos, notas de medicação, notas de passagem e check-ins dos pais. Criamos o BabyDays para ser calmo, consciente da privacidade e útil em momentos de cansaço.","<strong>Importante:</strong> BabyDays não é um dispositivo médico e não fornece diagnóstico, tratamento ou orientação de emergência."]},
+        {h:"2. Informações que você pode inserir",b:[["<strong>Perfil do bebê:</strong> nome do bebê, data de nascimento e detalhes opcionais.","<strong>Registros de cuidado:</strong> alimentação, sono, fralda, crescimento, medicação, marco, passagem e notas.","<strong>Check-ins dos pais:</strong> registros de humor e energia que você escolher salvar.","<strong>Configurações:</strong> idioma, unidades, modo escuro, lembretes e estado de direito premium.","<strong>Emails de suporte:</strong> se você nos contatar, recebemos seu email, mensagem e os detalhes que incluir."]]},
+        {h:"3. Armazenamento local-first",b:["BabyDays armazena dados de cuidado principalmente no seu dispositivo usando armazenamento local. No design offline-first atual, logs do bebê, check-ins dos pais, notas e marcos não são enviados por padrão para um servidor BabyDays.","Se você compartilhar, exportar, enviar por email, salvar em Files ou abrir conteúdo em outro app, o app ou serviço de terceiros selecionado poderá receber os dados que você escolher compartilhar."]},
+        {h:"4. Notificações",b:["BabyDays pode pedir permissão para agendar lembretes locais, como o próximo horário de alimentação. Notificações locais são agendadas no seu dispositivo. Notificações remotas podem ser adicionadas apenas se recursos de sincronização em nuvem/família forem introduzidos e testados depois."]},
+        {h:"5. Compras e assinaturas",b:["Compras premium são processadas pela Apple App Store ou Google Play. Não recebemos nem armazenamos os dados completos do seu cartão. Podemos salvar localmente um indicador de direito premium para desbloquear recursos comprados."]},
+        {h:"6. Analytics, diagnósticos e Firebase",b:["BabyDays pode usar Firebase ou serviços semelhantes para analytics, diagnóstico de falhas e mensagens se habilitados em uma versão de produção. Esses serviços podem processar informações técnicas como tipo de dispositivo, versão do sistema, versão do app, logs de falha, nomes de eventos e tokens de notificação. Não enviamos intencionalmente seus registros locais de cuidado do bebê ou conteúdo de check-ins dos pais para analytics."]},
+        {h:"7. Sem anúncios e sem venda de dados",b:["BabyDays foi projetado sem anúncios. Não vendemos seus dados pessoais."]},
+        {h:"8. Crianças e dados familiares",b:["BabyDays é destinado a pais, responsáveis e cuidadores. Como dados de cuidado do bebê e da família podem ser sensíveis, evite inserir informações que você não queira armazenar no dispositivo ou compartilhar por exportações."]},
+        {h:"9. Exclusão de dados",b:["Você pode remover dados do app excluindo registros quando disponível, limpando os dados do app nas configurações do dispositivo ou desinstalando o app. Se nos contatou por email, você pode solicitar a exclusão da correspondência de suporte quando legalmente possível."]},
+        {h:"10. Processamento internacional",b:["Provedores de email de suporte, Apple, Google, Firebase e outros provedores de serviços podem processar informações técnicas ou de suporte em países diferentes de onde você vive."]},
+        {h:"11. Alterações",b:["Podemos atualizar esta Privacy Policy quando BabyDays mudar. A data de atualização no topo mostra a versão mais recente."]},
+        {h:"12. Contato",c:true,b:["Se tiver perguntas ou solicitações de privacidade, entre em contato em {{email}}."]}
+      ],
+      fr: [
+        {h:"1. Aperçu",b:["BabyDays est une app de suivi des soins du bébé pour enregistrer l'alimentation, le sommeil, les couches, la croissance, les étapes, les notes de médicaments, les notes de relais et les check-ins des parents. Nous concevons BabyDays pour être calme, respectueuse de la vie privée et utile dans les moments de fatigue.","<strong>Important :</strong> BabyDays n'est pas un dispositif médical et ne fournit pas de diagnostic, de traitement ni de conseil d'urgence."]},
+        {h:"2. Informations que vous pouvez saisir",b:[["<strong>Profil du bébé :</strong> nom, date de naissance et détails optionnels.","<strong>Journaux de soins :</strong> alimentation, sommeil, couches, croissance, médicaments, étapes, relais et notes.","<strong>Check-ins des parents :</strong> humeur et énergie que vous choisissez d'enregistrer.","<strong>Paramètres :</strong> langue, unités, mode sombre, rappels et état premium.","<strong>Emails de support :</strong> si vous nous contactez, nous recevons votre adresse email, votre message et les détails inclus."]]},
+        {h:"3. Stockage local-first",b:["BabyDays stocke principalement les données de soins sur votre appareil au moyen d'un stockage local. Dans la conception offline-first actuelle, les journaux du bébé, check-ins des parents, notes et étapes ne sont pas envoyés par défaut à un serveur BabyDays.","Si vous partagez, exportez, envoyez par email, enregistrez dans Files ou ouvrez du contenu dans une autre app, l'app ou le service tiers choisi peut recevoir les données que vous décidez de partager."]},
+        {h:"4. Notifications",b:["BabyDays peut demander l'autorisation de programmer des rappels locaux, par exemple le prochain repas. Les notifications locales sont programmées sur votre appareil. Des notifications distantes ne pourront être ajoutées que si des fonctions de synchronisation cloud/famille sont introduites et testées plus tard."]},
+        {h:"5. Achats et abonnements",b:["Les achats premium sont traités par Apple App Store ou Google Play. Nous ne recevons ni ne stockons les données complètes de votre carte de paiement. Nous pouvons stocker localement un indicateur de droit premium afin de déverrouiller les fonctions achetées."]},
+        {h:"6. Analytics, diagnostics et Firebase",b:["BabyDays peut utiliser Firebase ou des services similaires pour les analytics, le diagnostic de crash et la messagerie si activés dans une version de production. Ces services peuvent traiter des informations techniques comme le type d'appareil, la version OS, la version de l'app, les journaux de crash, les noms d'événements et les tokens de notification. Nous ne téléversons pas intentionnellement vos journaux locaux de soins du bébé ni le contenu des check-ins des parents vers les analytics."]},
+        {h:"7. Pas de publicité ni de vente de données",b:["BabyDays est conçu sans publicité. Nous ne vendons pas vos données personnelles."]},
+        {h:"8. Enfants et données familiales",b:["BabyDays est destiné aux parents, tuteurs et aidants. Comme les données de soins du bébé et de la famille peuvent être sensibles, évitez de saisir des informations que vous ne souhaitez pas stocker sur l'appareil ou partager via des exports."]},
+        {h:"9. Suppression des données",b:["Vous pouvez supprimer les données de l'app en supprimant les journaux lorsque disponible, en effaçant les données de l'app dans les paramètres de votre appareil ou en désinstallant l'app. Si vous nous avez contactés par email, vous pouvez demander la suppression de la correspondance de support lorsque la loi le permet."]},
+        {h:"10. Traitement international",b:["Les fournisseurs d'email de support, Apple, Google, Firebase et d'autres prestataires peuvent traiter des informations techniques ou de support dans des pays autres que celui où vous vivez."]},
+        {h:"11. Modifications",b:["Nous pouvons mettre à jour cette Privacy Policy lorsque BabyDays change. La date de mise à jour en haut indique la dernière version."]},
+        {h:"12. Contact",c:true,b:["Pour toute question ou demande de confidentialité, contactez-nous à {{email}}."]}
+      ],
+      de: [
+        {h:"1. Überblick",b:["BabyDays ist eine Baby-Pflege-Tracking-App zum Erfassen von Füttern, Schlaf, Windelwechseln, Wachstum, Meilensteinen, Medikamentennotizen, Übergabenotizen und Eltern-Check-ins. Wir gestalten BabyDays ruhig, datenschutzbewusst und hilfreich in müden Momenten.","<strong>Wichtig:</strong> BabyDays ist kein Medizinprodukt und bietet keine medizinische Diagnose, Behandlung oder Notfallberatung."]},
+        {h:"2. Informationen, die du eingeben kannst",b:[["<strong>Babyprofil:</strong> Name, Geburtsdatum und optionale Profildetails.","<strong>Pflegeprotokolle:</strong> Einträge zu Füttern, Schlaf, Windeln, Wachstum, Medikamenten, Meilensteinen, Übergabe und Notizen.","<strong>Eltern-Check-ins:</strong> Stimmungs- und Energieeinträge, die du erfassen möchtest.","<strong>Einstellungen:</strong> Sprache, Einheiten, Dunkelmodus, Erinnerungen und Premium-Berechtigungsstatus.","<strong>Support-E-Mails:</strong> Wenn du uns kontaktierst, erhalten wir deine E-Mail-Adresse, Nachricht und die von dir angegebenen Details."]]},
+        {h:"3. Lokale Speicherung zuerst",b:["BabyDays speichert Pflegedaten hauptsächlich lokal auf deinem Gerät. Im aktuellen Offline-first-Design werden Babyprotokolle, Eltern-Check-ins, Notizen und Meilensteine standardmäßig nicht auf einen BabyDays-Server hochgeladen.","Wenn du Inhalte teilst, exportierst, per E-Mail sendest, in Files speicherst oder in einer anderen App öffnest, kann die ausgewählte Drittanbieter-App oder der Dienst die von dir geteilten Daten erhalten."]},
+        {h:"4. Benachrichtigungen",b:["BabyDays kann um Erlaubnis bitten, lokale Erinnerungen zu planen, etwa die nächste Fütterung. Lokale Benachrichtigungen werden auf deinem Gerät geplant. Remote-Benachrichtigungen können nur hinzugefügt werden, wenn Cloud-/Familiensynchronisation später eingeführt und getestet wird."]},
+        {h:"5. Käufe und Abonnements",b:["Premium-Käufe werden über Apple App Store oder Google Play verarbeitet. Wir erhalten oder speichern deine vollständigen Zahlungskartendaten nicht. Wir können lokal eine Premium-Berechtigung speichern, damit die App gekaufte Funktionen freischaltet."]},
+        {h:"6. Analytics, Diagnosen und Firebase",b:["BabyDays kann Firebase oder ähnliche Dienste für Analytics, Crash-Diagnosen und Messaging verwenden, wenn dies in einem Produktionsbuild aktiviert ist. Diese Dienste können technische Informationen wie Gerätetyp, OS-Version, App-Version, Crash-Protokolle, Ereignisnamen und Benachrichtigungstokens verarbeiten. Wir laden lokale Baby-Pflegeprotokolle oder Eltern-Check-in-Inhalte nicht absichtlich in Analytics hoch."]},
+        {h:"7. Keine Werbung und kein Datenverkauf",b:["BabyDays ist ohne Werbung gestaltet. Wir verkaufen deine personenbezogenen Daten nicht."]},
+        {h:"8. Kinder- und Familiendaten",b:["BabyDays richtet sich an Eltern, Erziehungsberechtigte und Pflegepersonen. Da Baby- und Familienpflegedaten sensibel sein können, gib bitte keine Informationen ein, die du nicht auf dem Gerät speichern oder über Exporte teilen möchtest."]},
+        {h:"9. Datenlöschung",b:["Du kannst App-Daten entfernen, indem du Protokolle löschst, sofern verfügbar, App-Daten in den Geräteeinstellungen löschst oder die App deinstallierst. Wenn du uns per E-Mail kontaktiert hast, kannst du die Löschung von Support-Korrespondenz verlangen, soweit rechtlich möglich."]},
+        {h:"10. Internationale Verarbeitung",b:["Support-E-Mail-Anbieter, Apple, Google, Firebase und andere Dienstanbieter können technische oder Support-Informationen in Ländern außerhalb deines Wohnsitzlandes verarbeiten."]},
+        {h:"11. Änderungen",b:["Wir können diese Privacy Policy aktualisieren, wenn sich BabyDays ändert. Das Aktualisierungsdatum oben zeigt die neueste Version."]},
+        {h:"12. Kontakt",c:true,b:["Bei Datenschutzfragen oder -anfragen kontaktiere uns unter {{email}}."]}
+      ],
+      ar: [
+        {h:"1. نظرة عامة",b:["BabyDays هو تطبيق لتتبع رعاية الطفل وتسجيل الرضاعة والنوم وتغيير الحفاضات والنمو والمراحل وملاحظات الدواء وملاحظات التسليم وتسجيلات حالة الوالدين. صممنا BabyDays ليكون هادئًا ومراعيًا للخصوصية ومفيدًا في لحظات التعب.","<strong>مهم:</strong> BabyDays ليس جهازًا طبيًا ولا يقدم تشخيصًا طبيًا أو علاجًا أو نصيحة طارئة."]},
+        {h:"2. المعلومات التي قد تدخلها",b:[["<strong>ملف الطفل:</strong> اسم الطفل وتاريخ الميلاد وتفاصيل اختيارية.","<strong>سجلات الرعاية:</strong> الرضاعة والنوم والحفاضات والنمو والدواء والمراحل والتسليم والملاحظات.","<strong>تسجيلات الوالدين:</strong> المزاج والطاقة التي تختار تسجيلها.","<strong>الإعدادات:</strong> اللغة ووحدات القياس والوضع الداكن والتذكيرات وحالة اشتراك premium.","<strong>رسائل الدعم:</strong> إذا تواصلت معنا، نتلقى عنوان بريدك ورسالتك وأي تفاصيل تضمنها."]]},
+        {h:"3. تخزين محلي أولًا",b:["يحفظ BabyDays بيانات الرعاية أساسًا على جهازك باستخدام التخزين المحلي. في التصميم الحالي الذي يعمل دون اتصال أولًا، لا يتم رفع سجلات الطفل أو تسجيلات الوالدين أو الملاحظات أو المراحل إلى خادم BabyDays افتراضيًا.","إذا شاركت أو صدرت أو أرسلت بالبريد أو حفظت في Files أو فتحت المحتوى في تطبيق آخر، فقد يتلقى التطبيق أو الخدمة الخارجية التي تختارها البيانات التي قررت مشاركتها."]},
+        {h:"4. الإشعارات",b:["قد يطلب BabyDays إذنًا لجدولة تذكيرات محلية، مثل تذكير الرضاعة التالية. تتم جدولة الإشعارات المحلية على جهازك. قد تضاف الإشعارات البعيدة فقط إذا تم تقديم واختبار ميزات مزامنة سحابية أو عائلية لاحقًا."]},
+        {h:"5. المشتريات والاشتراكات",b:["تتم معالجة مشتريات premium عبر Apple App Store أو Google Play. نحن لا نستلم أو نخزن تفاصيل بطاقة الدفع الكاملة. قد نخزن علامة استحقاق premium محلية حتى يفتح التطبيق الميزات المشتراة."]},
+        {h:"6. التحليلات والتشخيص و Firebase",b:["قد يستخدم BabyDays خدمات Firebase أو خدمات مشابهة للتحليلات وتشخيص الأعطال والرسائل إذا تم تفعيلها في إصدار إنتاجي. قد تعالج هذه الخدمات معلومات تقنية مثل نوع الجهاز وإصدار النظام وإصدار التطبيق وسجلات الأعطال وأسماء الأحداث ورموز الإشعارات. نحن لا نرفع عمدًا سجلات رعاية الطفل المحلية أو محتوى تسجيلات الوالدين إلى التحليلات."]},
+        {h:"7. لا إعلانات ولا بيع للبيانات",b:["تم تصميم BabyDays دون إعلانات. نحن لا نبيع بياناتك الشخصية."]},
+        {h:"8. الأطفال وبيانات العائلة",b:["BabyDays مخصص للوالدين والأوصياء ومقدمي الرعاية. لأن بيانات رعاية الطفل والعائلة قد تكون حساسة، يرجى تجنب إدخال معلومات لا تريد حفظها على الجهاز أو مشاركتها عبر التصدير."]},
+        {h:"9. حذف البيانات",b:["يمكنك إزالة بيانات التطبيق بحذف السجلات حيثما كان ذلك متاحًا، أو مسح بيانات التطبيق من إعدادات جهازك، أو إلغاء تثبيت التطبيق. إذا تواصلت معنا بالبريد الإلكتروني، يمكنك طلب حذف مراسلات الدعم حيثما يسمح القانون."]},
+        {h:"10. المعالجة الدولية",b:["قد يعالج مزودو بريد الدعم و Apple و Google و Firebase ومزودو خدمات آخرون معلومات تقنية أو معلومات دعم في دول غير الدولة التي تعيش فيها."]},
+        {h:"11. التغييرات",b:["قد نحدث Privacy Policy هذه عندما يتغير BabyDays. يظهر تاريخ التحديث في الأعلى أحدث إصدار."]},
+        {h:"12. التواصل",c:true,b:["إذا كانت لديك أسئلة أو طلبات بخصوص الخصوصية، تواصل معنا عبر {{email}}."]}
+      ]
+    };
+
+    function renderSections(code) {
+      const selected = sections[code] || sections.en;
+      const email = '<a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a>';
+      document.getElementById("sc").innerHTML = selected.map((section) => {
+        const body = section.b.map((node) => Array.isArray(node)
+          ? `<ul>${node.map((item) => `<li>${item}</li>`).join("")}</ul>`
+          : `<p>${node.replace("{{email}}", email)}</p>`
+        ).join("");
+        if (!section.c) return `<section><h2>${section.h}</h2>${body}</section>`;
+        return `<section class="cta-card"><div class="cta-row"><div><h2>${section.h}</h2>${body}</div><a class="button" href="mailto:khanhquang29000@gmail.com?subject=BabyDays%20Privacy%20Request">Email us</a></div></section>`;
+      }).join("");
+    }
+
+    const select = document.getElementById("languageSelect");
+    const browserLanguage = (navigator.language || "en").slice(0, 2).toLowerCase();
+    const initialLanguage = copy[browserLanguage] ? browserLanguage : "en";
+
+    for (const [code, label] of languages) {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = label;
+      select.appendChild(option);
+    }
+
+    function renderLanguage(code) {
+      const item = copy[code] || copy.en;
+      document.documentElement.lang = code;
+      document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
+      document.getElementById("languageTitle").textContent = item.title;
+      document.getElementById("languageSubtitle").textContent = item.subtitle;
+      document.getElementById("localizedSummary").textContent = item.summary;
+      document.getElementById("legalNote").textContent = item.note;
+      select.value = code;
+      renderSections(code);
+    }
+
+    select.addEventListener("change", (event) => renderLanguage(event.target.value));
+    renderLanguage(initialLanguage);
+  </script>
 </body>
 </html>

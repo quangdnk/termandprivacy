@@ -60,6 +60,10 @@
     .button:hover { text-decoration: none; filter: brightness(1.05); }
     nav { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
     nav a { padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); font-weight: 800; }
+    .language-card { background: linear-gradient(145deg, rgba(102,217,168,.13), rgba(25,19,22,.78)); }
+    .language-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    select { min-width: 230px; border: 1px solid var(--line); border-radius: 14px; background: var(--elevated); color: var(--text); padding: 12px 14px; font: inherit; font-weight: 800; }
+    .localized-summary { margin: 16px 0 0; color: var(--text); }
     footer { margin-top: 28px; color: var(--muted); font-size: 13px; text-align: center; }
     @media (max-width: 720px) { main { padding-top: 28px; } header, section { padding: 20px; border-radius: 22px; } .grid { grid-template-columns: 1fr; } }
 
@@ -78,6 +82,20 @@
         <a href="support.html">Support</a>
       </nav>
     </header>
+
+    <section class="language-card" aria-label="Language selector">
+      <div class="language-row">
+        <div>
+          <h2 id="languageTitle">Quick support in your language</h2>
+          <p class="meta" id="languageSubtitle">Choose a language for a short support summary.</p>
+        </div>
+        <label>
+          <span class="eyebrow">Language</span><br>
+          <select id="languageSelect" aria-label="Select language"></select>
+        </label>
+      </div>
+      <p class="localized-summary" id="localizedSummary"></p>
+    </section>
 
     <section class="cta-card">
       <div class="cta-row">
@@ -121,5 +139,96 @@
 
     <footer>BabyDays · Contact: <a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a></footer>
   </main>
+  <script>
+    const summaries = {
+      en: {
+        label: "English",
+        title: "Quick support in your language",
+        subtitle: "Choose a language for a short support summary.",
+        summary: "Need help with BabyDays? Email support with your device model, OS version, app version, what happened, and steps to reproduce the issue. Avoid sending sensitive baby or family data unless needed."
+      },
+      vi: {
+        label: "Tiếng Việt",
+        title: "Hỗ trợ nhanh bằng ngôn ngữ của bạn",
+        subtitle: "Chọn ngôn ngữ để xem tóm tắt hỗ trợ.",
+        summary: "Nếu cần hỗ trợ BabyDays, hãy gửi email kèm model thiết bị, phiên bản hệ điều hành, phiên bản app, vấn đề đã xảy ra và các bước tái hiện. Tránh gửi dữ liệu nhạy cảm của bé hoặc gia đình nếu không cần thiết."
+      },
+      ja: {
+        label: "日本語",
+        title: "お使いの言語でのクイックサポート",
+        subtitle: "短いサポート概要を表示する言語を選択してください。",
+        summary: "BabyDays のサポートが必要な場合は、端末モデル、OS バージョン、アプリバージョン、発生した問題、再現手順をメールでお知らせください。必要がない限り、赤ちゃんや家族の機微なデータは送らないでください。"
+      },
+      ko: {
+        label: "한국어",
+        title: "사용 언어로 빠른 지원",
+        subtitle: "짧은 지원 안내를 볼 언어를 선택하세요.",
+        summary: "BabyDays 지원이 필요하면 기기 모델, OS 버전, 앱 버전, 발생한 문제 및 재현 단계를 이메일로 보내 주세요. 필요한 경우가 아니라면 민감한 아기 또는 가족 데이터는 보내지 마세요."
+      },
+      zh: {
+        label: "简体中文",
+        title: "使用你的语言获取快速支持",
+        subtitle: "选择语言查看简短支持说明。",
+        summary: "如果需要 BabyDays 支持，请通过邮件提供设备型号、系统版本、应用版本、遇到的问题和复现步骤。除非必要，请避免发送敏感的宝宝或家庭数据。"
+      },
+      es: {
+        label: "Español",
+        title: "Soporte rápido en tu idioma",
+        subtitle: "Elige un idioma para ver un resumen de soporte.",
+        summary: "Si necesitas ayuda con BabyDays, envía un email con tu modelo de dispositivo, versión del sistema, versión de la app, qué ocurrió y los pasos para reproducirlo. Evita enviar datos sensibles del bebé o la familia salvo que sea necesario."
+      },
+      pt: {
+        label: "Português",
+        title: "Suporte rápido no seu idioma",
+        subtitle: "Escolha um idioma para ver um resumo de suporte.",
+        summary: "Se precisar de ajuda com BabyDays, envie um email com o modelo do dispositivo, versão do sistema, versão do app, o que aconteceu e os passos para reproduzir. Evite enviar dados sensíveis do bebê ou da família salvo se necessário."
+      },
+      fr: {
+        label: "Français",
+        title: "Support rapide dans votre langue",
+        subtitle: "Choisissez une langue pour afficher un court résumé.",
+        summary: "Pour obtenir de l'aide avec BabyDays, envoyez un email avec le modèle de votre appareil, la version OS, la version de l'app, le problème rencontré et les étapes de reproduction. Évitez d'envoyer des données sensibles du bébé ou de la famille sauf si nécessaire."
+      },
+      de: {
+        label: "Deutsch",
+        title: "Schneller Support in deiner Sprache",
+        subtitle: "Wähle eine Sprache für eine kurze Support-Zusammenfassung.",
+        summary: "Wenn du Hilfe mit BabyDays brauchst, sende per E-Mail dein Gerätemodell, die OS-Version, die App-Version, was passiert ist und die Schritte zur Reproduktion. Vermeide sensible Baby- oder Familiendaten, sofern sie nicht nötig sind."
+      },
+      ar: {
+        label: "العربية",
+        title: "دعم سريع بلغتك",
+        subtitle: "اختر لغة لعرض ملخص دعم قصير.",
+        summary: "إذا كنت بحاجة إلى دعم BabyDays، أرسل بريدًا يتضمن طراز جهازك وإصدار النظام وإصدار التطبيق وما حدث وخطوات إعادة إنتاج المشكلة. تجنب إرسال بيانات حساسة عن الطفل أو العائلة إلا إذا كان ذلك ضروريًا."
+      }
+    };
+
+    const select = document.getElementById("languageSelect");
+    const title = document.getElementById("languageTitle");
+    const subtitle = document.getElementById("languageSubtitle");
+    const summary = document.getElementById("localizedSummary");
+
+    Object.entries(summaries).forEach(([code, item]) => {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = item.label;
+      select.appendChild(option);
+    });
+
+    const preferred = (navigator.language || "en").slice(0, 2).toLowerCase();
+    select.value = summaries[preferred] ? preferred : "en";
+
+    function renderLanguage() {
+      const item = summaries[select.value] || summaries.en;
+      title.textContent = item.title;
+      subtitle.textContent = item.subtitle;
+      summary.textContent = item.summary;
+      document.documentElement.lang = select.value;
+      document.documentElement.dir = select.value === "ar" ? "rtl" : "ltr";
+    }
+
+    select.addEventListener("change", renderLanguage);
+    renderLanguage();
+  </script>
 </body>
 </html>
