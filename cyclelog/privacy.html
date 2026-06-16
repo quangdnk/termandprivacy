@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy - CycleLog</title>
+  <meta name="description" content="Privacy Policy for CycleLog, a privacy-first period and cycle tracking app with local storage.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0c0a0b;
+      --card: #171315;
+      --elevated: #1e1a1c;
+      --text: #ffffff;
+      --muted: #a2a2aa;
+      --line: rgba(255, 255, 255, 0.08);
+      --accent: #E8547A;
+      --rose: #E8547A;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(232, 84, 122, 0.18), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(200, 100, 180, 0.08), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    header {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    .eyebrow {
+      color: var(--rose);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: clamp(34px, 7vw, 58px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 34px 0 10px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    p, li {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    strong { color: var(--text); }
+
+    a {
+      color: #f9a8c0;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    section {
+      margin-top: 18px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(21, 19, 21, 0.72);
+    }
+
+    .language-card {
+      background: linear-gradient(145deg, rgba(232, 84, 122, 0.12), rgba(21, 19, 21, 0.72));
+    }
+
+    .language-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    select {
+      min-width: 230px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--elevated);
+      color: var(--text);
+      padding: 12px 14px;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .localized-summary {
+      margin: 16px 0 0;
+      color: var(--text);
+    }
+
+    .legal-note {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    ul { padding-left: 22px; }
+
+    .meta {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">CycleLog</div>
+      <h1>Privacy Policy</h1>
+      <p class="meta">Last updated: June 16, 2026</p>
+      <div class="pill-row" aria-label="Privacy highlights">
+        <span class="pill">Fully offline</span>
+        <span class="pill">No account required</span>
+        <span class="pill">No data uploaded</span>
+        <span class="pill">Apple / Google payments</span>
+      </div>
+    </header>
+
+    <section class="language-card" aria-label="Language selector">
+      <div class="language-row">
+        <div>
+          <h2 id="languageTitle">Read in your language</h2>
+          <p class="meta" id="languageSubtitle">The English version below is the official legal text.</p>
+        </div>
+        <label>
+          <span class="eyebrow">Language</span><br>
+          <select id="languageSelect" aria-label="Select language"></select>
+        </label>
+      </div>
+      <p class="localized-summary" id="localizedSummary"></p>
+      <p class="legal-note" id="legalNote"></p>
+    </section>
+
+    <div id="sc"></div>
+
+    <footer>
+      <p><a href="./terms.html">Terms of Service</a> · CycleLog</p>
+    </footer>
+  </main>
+
+  <script>
+    const languages = [
+      ["en", "English"]
+    ];
+
+    const copy = {
+      en: {
+        title: "Read in your language",
+        subtitle: "The English version below is the official legal text.",
+        summary: "CycleLog is designed to be completely private and offline. Your period dates, cycle data, symptoms, mood, and health signals stay on your device — no account required, no data uploaded to external servers. If you make a purchase, Apple or Google processes the payment.",
+        note: "This localized summary is provided for convenience. If it conflicts with the English policy below, the English policy controls."
+      }
+    };
+
+    const sections = {
+      en: [
+        {h:"1. Overview",b:[
+          "This Privacy Policy explains how CycleLog (\"CycleLog\", \"the App\", \"we\", \"us\", or \"our\") handles information when you use the App. CycleLog is a private period and cycle tracking app for logging menstrual cycles, period dates, flow intensity, mood, symptoms, basal body temperature (BBT), energy levels, sleep quality, and related health signals.",
+          "CycleLog is designed to be private and offline-first. Your health and cycle data is stored on your device and is not uploaded to our servers or shared with third parties for advertising or tracking purposes."
+        ]},
+        {h:"2. Information You Track or Log",b:[
+          "The App processes the following information to provide its features:",
+          [
+            "<strong>Cycle and period data:</strong> period start and end dates, cycle length, period length, and cycle calendar data.",
+            "<strong>Health signals and symptoms:</strong> flow intensity, mood, energy level, sleep quality, basal body temperature (BBT), cramps, and other symptoms you choose to log.",
+            "<strong>Notes:</strong> any free-text notes you attach to log entries.",
+            "<strong>App settings:</strong> cycle length defaults, reminder time, app lock preference, language, and display preferences.",
+            "<strong>Import and export data:</strong> if you import or export your data, a local JSON file is created or read on your device.",
+            "<strong>Feedback:</strong> if you contact us by email, we may receive your email address, message, and any information you choose to include."
+          ],
+          "This information is stored locally on your device. We do not operate a cloud sync or backup service for CycleLog."
+        ]},
+        {h:"3. Permissions",b:[
+          "Depending on the features you use, the App may request access to:",
+          [
+            "<strong>Biometric authentication (Face ID, fingerprint):</strong> if you enable the App Lock feature. Your biometric data is processed entirely by your device's operating system and is never accessed or stored by the App.",
+            "<strong>Notifications:</strong> to send you local period reminders, cycle predictions, or other alerts you enable.",
+            "<strong>Files:</strong> to export your cycle data to a local file or import a previously exported backup."
+          ],
+          "You can manage these permissions in your device settings."
+        ]},
+        {h:"4. Offline Operation — No External Analytics",b:[
+          "CycleLog is designed to work completely offline. The App does not use third-party analytics services, crash reporting services, or advertising networks in the current version.",
+          "Your cycle data, health signals, and usage activity are not sent to external servers for tracking, analytics, or advertising purposes. If you encounter a technical issue, you may choose to share details with us directly via email."
+        ]},
+        {h:"5. Purchases and Subscriptions",b:[
+          "CycleLog may offer free features and Pro features through a monthly or yearly subscription. Payments are processed by Apple App Store or Google Play. We do not receive or store your full credit card number.",
+          "We may receive purchase status, product identifiers, entitlement status, or subscription state from Apple or Google so the App can unlock Pro features."
+        ]},
+        {h:"6. Exporting and Importing Data",b:[
+          "If you use the Export feature, your cycle data is written to a local JSON file on your device. You may then choose to share, save, or back up this file using your device's file system or other apps. The handling of exported data by any third-party apps you share it with is governed by their own privacy policies.",
+          "We do not receive, store, or process your exported data files on our servers."
+        ]},
+        {h:"7. Emergency Privacy Mode and App Lock",b:[
+          "Emergency Privacy Mode lets you instantly hide all visible cycle data with a single tap. App Lock lets you require biometric authentication or device passcode to open the App. These features are designed to protect your privacy on your device.",
+          "Biometric data used for App Lock is processed entirely by your operating system's secure enclave and is not accessible to the App or transmitted anywhere."
+        ]},
+        {h:"8. Health Data and Medical Information",b:[
+          "Cycle data you log, and estimates generated by the App, are personal health information. We treat this data with particular care: it stays on your device and is not shared with advertisers, data brokers, or third-party services without your explicit action.",
+          "CycleLog is not a medical device and does not provide medical advice. Cycle estimates, period predictions, fertile window estimates, and ovulation estimates are statistical calculations. They are not medical diagnoses and are not suitable as a contraceptive method."
+        ]},
+        {h:"9. Data Retention and Deletion",b:[
+          "Local app data remains on your device until you delete individual log entries, clear all data in Settings, or uninstall the App.",
+          "If you contact us by email, we may retain that conversation for support and product improvement purposes."
+        ]},
+        {h:"10. Children",b:[
+          "CycleLog is not directed to children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information, please contact us so we can take appropriate action."
+        ]},
+        {h:"11. International Users",b:[
+          "CycleLog may be used globally. If you make a purchase, Apple or Google may process payment information in countries other than where you live, in accordance with their own privacy policies. We do not upload your health or cycle data to external servers."
+        ]},
+        {h:"12. Changes to This Policy",b:[
+          "We may update this Privacy Policy from time to time. If we make material changes, we will update the \"Last updated\" date and may provide additional notice in the App where appropriate."
+        ]},
+        {h:"13. Contact",b:["If you have questions, requests, or feedback about this Privacy Policy, contact us at {{email}}."]}
+      ]
+    };
+
+    function renderSections(code) {
+      const s = sections[code] || sections.en;
+      const EMAIL = '<a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a>';
+      document.getElementById("sc").innerHTML = s.map(sec =>
+        `<section><h2>${sec.h}</h2>${sec.b.map(n =>
+          Array.isArray(n)
+            ? `<ul>${n.map(i => `<li>${i}</li>`).join("")}</ul>`
+            : `<p>${n.replace("{{email}}", EMAIL)}</p>`
+        ).join("")}</section>`
+      ).join("");
+    }
+
+    const select = document.getElementById("languageSelect");
+    const browserLanguage = (navigator.language || "en").slice(0, 2).toLowerCase();
+    const initialLanguage = copy[browserLanguage] ? browserLanguage : "en";
+
+    for (const [code, label] of languages) {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = label;
+      select.appendChild(option);
+    }
+
+    function renderLanguage(code) {
+      const item = copy[code] || copy.en;
+      document.documentElement.lang = code;
+      document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
+      document.getElementById("languageTitle").textContent = item.title;
+      document.getElementById("languageSubtitle").textContent = item.subtitle;
+      document.getElementById("localizedSummary").textContent = item.summary;
+      document.getElementById("legalNote").textContent = item.note;
+      select.value = code;
+      renderSections(code);
+    }
+
+    select.addEventListener("change", (event) => renderLanguage(event.target.value));
+    renderLanguage(initialLanguage);
+  </script>
+</body>
+</html>

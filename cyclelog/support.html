@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Support - CycleLog</title>
+  <meta name="description" content="Support page for CycleLog, a privacy-first period and cycle tracking app.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0c0a0b;
+      --card: #171315;
+      --elevated: #1e1a1c;
+      --text: #ffffff;
+      --muted: #a2a2aa;
+      --line: rgba(255, 255, 255, 0.08);
+      --accent: #E8547A;
+      --rose: #E8547A;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(232, 84, 122, 0.2), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(200, 100, 180, 0.1), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    header {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    .eyebrow {
+      color: var(--rose);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: clamp(34px, 7vw, 58px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    p, li {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    strong { color: var(--text); }
+
+    a {
+      color: #f9a8c0;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    section {
+      margin-top: 18px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(21, 19, 21, 0.72);
+    }
+
+    ul {
+      padding-left: 22px;
+      margin-bottom: 0;
+    }
+
+    .meta {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .cta-card {
+      background: linear-gradient(145deg, rgba(232, 84, 122, 0.16), rgba(21, 19, 21, 0.78));
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), #f47da0);
+      color: #fff;
+      font-weight: 900;
+      box-shadow: 0 18px 44px rgba(232, 84, 122, 0.32);
+    }
+
+    .button:hover {
+      text-decoration: none;
+      filter: brightness(1.05);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .mini-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .mini-card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .mini-card p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .language-card {
+      background: linear-gradient(145deg, rgba(232, 84, 122, 0.12), rgba(21, 19, 21, 0.72));
+    }
+
+    .language-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    select {
+      min-width: 230px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--elevated);
+      color: var(--text);
+      padding: 12px 14px;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .localized-summary {
+      margin: 16px 0 0;
+      color: var(--text);
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      main { padding-top: 28px; }
+      header, section { padding: 20px; border-radius: 22px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">CycleLog Support</div>
+      <h1>We are here to help.</h1>
+      <p class="meta">Last updated: June 16, 2026</p>
+      <div class="pill-row" aria-label="Support topics">
+        <span class="pill">Cycle logging</span>
+        <span class="pill">Estimates</span>
+        <span class="pill">Purchases</span>
+        <span class="pill">Privacy</span>
+      </div>
+    </header>
+
+    <section class="language-card" aria-label="Language selector">
+      <div class="language-row">
+        <div>
+          <h2 id="languageTitle">Quick support in your language</h2>
+          <p class="meta" id="languageSubtitle">Choose a language for a short support summary.</p>
+        </div>
+        <label>
+          <span class="eyebrow">Language</span><br>
+          <select id="languageSelect" aria-label="Select language"></select>
+        </label>
+      </div>
+      <p class="localized-summary" id="localizedSummary"></p>
+    </section>
+
+    <section class="cta-card">
+      <div class="cta-row">
+        <div>
+          <h2>Contact support</h2>
+          <p class="meta">
+            For bugs, prediction questions, purchase issues, or feature requests,
+            email us and include a short description of what happened.
+          </p>
+        </div>
+        <a class="button" href="mailto:khanhquang29000@gmail.com?subject=CycleLog%20Support">Email Support</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Before contacting us</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>Cycle estimates</h3>
+          <p>Estimates improve as you log more cycles. Log at least 3 full cycles for better predictions.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Data & export</h3>
+          <p>Use Export in Settings to back up your data before switching devices or reinstalling the app.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Purchases</h3>
+          <p>Use Restore Purchase in Settings if you changed devices or reinstalled the app.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Emergency Privacy</h3>
+          <p>Tap the Emergency Privacy button to instantly hide all data. Your logs are not deleted.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What to include</h2>
+      <ul>
+        <li>Your device model and iOS or Android version.</li>
+        <li>The CycleLog app version if you know it.</li>
+        <li>A short description of the problem or request.</li>
+        <li>Steps to reproduce the issue, if possible.</li>
+        <li>Screenshots only if you are comfortable sharing them.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Medical disclaimer</h2>
+      <p>
+        CycleLog provides cycle estimates only. It is <strong>not medical advice</strong> and
+        <strong>not a contraceptive method</strong>. Always consult a qualified healthcare provider
+        for medical guidance related to your menstrual or reproductive health.
+      </p>
+    </section>
+
+    <section>
+      <h2>Legal and privacy</h2>
+      <p>
+        You can review the <a href="./privacy.html">Privacy Policy</a> and
+        <a href="./terms.html">Terms of Service</a>. CycleLog is designed as a fully offline,
+        privacy-first app. Your cycle data stays on your device and is never uploaded to external servers.
+      </p>
+    </section>
+
+    <footer>
+      CycleLog — Private Cycle Tracker. Contact: <a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a>
+    </footer>
+  </main>
+
+  <script>
+    const summaries = {
+      en: {
+        label: "English",
+        title: "Quick support in your language",
+        subtitle: "Choose a language for a short support summary.",
+        summary: "Need help with CycleLog? Email support with your device, app version, what happened, and steps to reproduce the issue. Remember: CycleLog estimates are not medical advice."
+      }
+    };
+
+    const select = document.getElementById("languageSelect");
+    const title = document.getElementById("languageTitle");
+    const subtitle = document.getElementById("languageSubtitle");
+    const summary = document.getElementById("localizedSummary");
+
+    Object.entries(summaries).forEach(([code, item]) => {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = item.label;
+      select.appendChild(option);
+    });
+
+    const preferred = (navigator.language || "en").slice(0, 2);
+    select.value = summaries[preferred] ? preferred : "en";
+
+    function renderLanguage() {
+      const item = summaries[select.value] || summaries.en;
+      title.textContent = item.title;
+      subtitle.textContent = item.subtitle;
+      summary.textContent = item.summary;
+      document.documentElement.lang = select.value;
+      document.documentElement.dir = select.value === "ar" ? "rtl" : "ltr";
+    }
+
+    select.addEventListener("change", renderLanguage);
+    renderLanguage();
+  </script>
+</body>
+</html>

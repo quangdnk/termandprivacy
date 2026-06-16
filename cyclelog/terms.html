@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terms of Service - CycleLog</title>
+  <meta name="description" content="Terms of Service for CycleLog, a privacy-first period and cycle tracking app.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0c0a0b;
+      --card: #171315;
+      --elevated: #1e1a1c;
+      --text: #ffffff;
+      --muted: #a2a2aa;
+      --line: rgba(255, 255, 255, 0.08);
+      --accent: #E8547A;
+      --warning: #ffb84d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(232, 84, 122, 0.18), transparent 34rem),
+        radial-gradient(circle at bottom left, rgba(255, 184, 77, 0.08), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    header {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    .eyebrow {
+      color: var(--warning);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: clamp(34px, 7vw, 58px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 34px 0 10px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    p, li {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    strong { color: var(--text); }
+
+    a {
+      color: #f9a8c0;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    section {
+      margin-top: 18px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(21, 19, 21, 0.72);
+    }
+
+    .language-card {
+      background: linear-gradient(145deg, rgba(255, 184, 77, 0.12), rgba(21, 19, 21, 0.72));
+    }
+
+    .medical-card {
+      border-color: rgba(232, 84, 122, 0.35);
+      background: linear-gradient(145deg, rgba(232, 84, 122, 0.1), rgba(21, 19, 21, 0.72));
+    }
+
+    .language-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    select {
+      min-width: 230px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--elevated);
+      color: var(--text);
+      padding: 12px 14px;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .localized-summary {
+      margin: 16px 0 0;
+      color: var(--text);
+    }
+
+    .legal-note {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    ul { padding-left: 22px; }
+
+    .meta {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">CycleLog</div>
+      <h1>Terms of Service</h1>
+      <p class="meta">Last updated: June 16, 2026</p>
+      <div class="pill-row" aria-label="Terms highlights">
+        <span class="pill">Cycle tracker</span>
+        <span class="pill">Estimates only</span>
+        <span class="pill">Not medical advice</span>
+        <span class="pill">Subscriptions</span>
+      </div>
+    </header>
+
+    <section class="language-card" aria-label="Language selector">
+      <div class="language-row">
+        <div>
+          <h2 id="languageTitle">Read in your language</h2>
+          <p class="meta" id="languageSubtitle">The English version below is the official legal text.</p>
+        </div>
+        <label>
+          <span class="eyebrow">Language</span><br>
+          <select id="languageSelect" aria-label="Select language"></select>
+        </label>
+      </div>
+      <p class="localized-summary" id="localizedSummary"></p>
+      <p class="legal-note" id="legalNote"></p>
+    </section>
+
+    <div id="sc"></div>
+
+    <footer>
+      <p><a href="./privacy.html">Privacy Policy</a> · CycleLog</p>
+    </footer>
+  </main>
+
+  <script>
+    const languages = [
+      ["en", "English"]
+    ];
+
+    const copy = {
+      en: {
+        title: "Read in your language",
+        subtitle: "The English version below is the official legal text.",
+        summary: "By using CycleLog, you agree that cycle predictions and estimates are not medical advice and not a substitute for healthcare guidance. You are responsible for decisions made based on the App. CycleLog is not a contraceptive method. Subscriptions and purchases are handled through Apple App Store or Google Play.",
+        note: "This localized summary is provided for convenience. If it conflicts with the English Terms below, the English Terms control."
+      }
+    };
+
+    const sections = {
+      en: [
+        {h:"1. Agreement",b:[
+          "These Terms of Service (\"Terms\") govern your access to and use of CycleLog (\"CycleLog\", \"the App\", \"we\", \"us\", or \"our\"). By downloading, accessing, or using the App, you agree to these Terms. If you do not agree, do not use the App."
+        ]},
+        {h:"2. What the App Does",b:[
+          "CycleLog is a private mobile app for tracking menstrual cycles, logging health signals, viewing cycle estimates, and managing personal health data locally on your device.",
+          "Some features may be free. Some features may require a Pro subscription, free trial, or another entitlement shown in the App."
+        ]},
+        {h:"3. Not Medical Advice",b:[
+          "<strong>CycleLog is not a medical device, medical service, or healthcare provider.</strong>",
+          "Cycle predictions, period estimates, ovulation estimates, fertile window estimates, and all other outputs generated by the App are statistical estimates based on data you provide. They are not medical diagnoses, clinical assessments, or medical advice.",
+          "<strong>CycleLog is not a contraceptive method.</strong> Do not use the App's predictions to make decisions about contraception, pregnancy, or reproductive health without consulting a qualified healthcare provider.",
+          "Always consult a qualified healthcare provider for medical advice, diagnosis, or treatment related to your menstrual health, reproductive health, or any other health concern."
+        ]},
+        {h:"4. Your Content and Responsibility",b:[
+          "You are responsible for the cycle data, health signals, notes, dates, and other information you log or enter into the App.",
+          "You agree not to use the App in any way that violates applicable laws or regulations or infringes the rights of others."
+        ]},
+        {h:"5. Local Data and Data Loss",b:[
+          "CycleLog is designed to store your cycle data locally on your device. You are responsible for keeping backup copies of important data by using the App's Export feature.",
+          "Local data may be lost if you delete log entries, clear app data, uninstall the App, change devices, or if the operating system removes app data. We are not responsible for loss of locally stored data."
+        ]},
+        {h:"6. Accuracy of Estimates",b:[
+          "We work to make cycle length predictions, period date estimates, ovulation estimates, and fertile window calculations as accurate as possible based on your logged data. However, individual cycles vary and no estimate can be guaranteed.",
+          "Prediction accuracy depends on the amount of historical data logged, the regularity of your cycles, and other individual factors. Review estimates before relying on them for any important decision. Always consult a healthcare provider for medical guidance."
+        ]},
+        {h:"7. Emergency Privacy Mode",b:[
+          "Emergency Privacy Mode is designed to quickly hide visible cycle data on your screen. It is a convenience feature intended to protect your on-screen privacy. It does not delete data and does not guarantee that data cannot be recovered by someone with physical access to your unlocked device.",
+          "You are responsible for the overall security of your device and the data stored on it."
+        ]},
+        {h:"8. Subscriptions, Trials, and Purchases",b:[
+          "CycleLog may offer monthly, yearly, trial, or promotional subscription options. Prices, trial length, features, and availability may vary by country, platform, and time.",
+          [
+            "Subscriptions renew automatically unless canceled according to Apple App Store or Google Play rules.",
+            "Free trials may convert to paid subscriptions unless canceled before the trial ends.",
+            "You can manage or cancel subscriptions through your Apple App Store or Google Play account settings.",
+            "Refunds are handled by Apple, Google, or the applicable app marketplace according to their policies."
+          ],
+          "We may change free and paid feature availability over time, but changes will not intentionally remove active paid entitlements without a reasonable replacement or platform-supported handling."
+        ]},
+        {h:"9. Third-Party Services",b:[
+          "The App interacts with Apple App Store or Google Play for purchases and subscriptions. If you export and share data, third-party apps or file services you select will process that data under their own terms and privacy policies.",
+          "App Lock uses your device's operating system biometric APIs. Biometric data is not shared with us or any third party."
+        ]},
+        {h:"10. Updates and Changes",b:[
+          "We may update the App, add or remove features, fix bugs, change pricing, or update these Terms. If we make material changes, we will update the \"Last updated\" date and may provide additional notice where appropriate."
+        ]},
+        {h:"11. No Warranties",b:[
+          "The App is provided on an \"as is\" and \"as available\" basis. To the maximum extent permitted by law, we disclaim warranties of merchantability, fitness for a particular purpose, non-infringement, availability, accuracy of estimates, and error-free operation."
+        ]},
+        {h:"12. Limitation of Liability",b:[
+          "To the maximum extent permitted by law, we will not be liable for indirect, incidental, special, consequential, exemplary, or punitive damages, or for loss of data, inaccurate cycle predictions, health-related decisions made based on App estimates, missed period dates, or reliance on generated cycle data."
+        ]},
+        {h:"13. Apple and Google Terms",b:[
+          "If you downloaded the App from Apple App Store or Google Play, your use of the App is also subject to the applicable marketplace terms, subscription rules, payment rules, refund rules, and platform policies."
+        ]},
+        {h:"14. Contact",b:["If you have questions about these Terms, contact us at {{email}}."]}
+      ]
+    };
+
+    function renderSections(code) {
+      const s = sections[code] || sections.en;
+      const EMAIL = '<a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a>';
+      document.getElementById("sc").innerHTML = s.map((sec, idx) => {
+        const isMedical = idx === 2;
+        return `<section${isMedical ? ' class="medical-card"' : ""}><h2>${sec.h}</h2>${sec.b.map(n =>
+          Array.isArray(n)
+            ? `<ul>${n.map(i => `<li>${i}</li>`).join("")}</ul>`
+            : `<p>${n.replace("{{email}}", EMAIL)}</p>`
+        ).join("")}</section>`;
+      }).join("");
+    }
+
+    const select = document.getElementById("languageSelect");
+    const browserLanguage = (navigator.language || "en").slice(0, 2).toLowerCase();
+    const initialLanguage = copy[browserLanguage] ? browserLanguage : "en";
+
+    for (const [code, label] of languages) {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = label;
+      select.appendChild(option);
+    }
+
+    function renderLanguage(code) {
+      const item = copy[code] || copy.en;
+      document.documentElement.lang = code;
+      document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
+      document.getElementById("languageTitle").textContent = item.title;
+      document.getElementById("languageSubtitle").textContent = item.subtitle;
+      document.getElementById("localizedSummary").textContent = item.summary;
+      document.getElementById("legalNote").textContent = item.note;
+      select.value = code;
+      renderSections(code);
+    }
+
+    select.addEventListener("change", (event) => renderLanguage(event.target.value));
+    renderLanguage(initialLanguage);
+  </script>
+</body>
+</html>
