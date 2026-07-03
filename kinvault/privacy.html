@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy - KinVault</title>
+  <meta name="description" content="Privacy Policy for KinVault, an offline-first senior care reminder and family coordination app.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0f1411;
+      --card: #17201b;
+      --elevated: #1f2a24;
+      --text: #fbfff8;
+      --muted: #bfcbc2;
+      --line: rgba(255, 255, 255, 0.1);
+      --primary: #2e7d5b;
+      --accent: #bc5733;
+      --warning: #d29a3f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(46, 125, 91, 0.24), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(188, 87, 51, 0.14), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+    main { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 56px 0 72px; }
+    header, section {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(23, 32, 27, 0.76);
+    }
+    header {
+      padding: 28px;
+      background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+      box-shadow: 0 28px 80px rgba(0,0,0,.38);
+    }
+    section { margin-top: 18px; padding: 24px; }
+    .eyebrow { color: #8dd6b2; font-size: 13px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { margin: 10px 0 8px; font-size: clamp(34px, 7vw, 58px); line-height: 1.04; letter-spacing: 0; }
+    h2 { margin: 0 0 10px; font-size: 22px; line-height: 1.25; }
+    p, li { color: var(--muted); font-size: 16px; }
+    strong { color: var(--text); }
+    a { color: #9be2bd; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { padding-left: 22px; margin-bottom: 0; }
+    nav, .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    nav a, .pill {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.055);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .meta { margin: 0; color: var(--muted); }
+    .notice { border-color: rgba(210,154,63,.32); background: linear-gradient(145deg, rgba(210,154,63,.12), rgba(23,32,27,.76)); }
+    footer { margin-top: 28px; color: var(--muted); font-size: 13px; text-align: center; }
+    @media (max-width: 720px) { main { padding-top: 28px; } header, section { padding: 20px; border-radius: 20px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">KinVault</div>
+      <h1>Privacy Policy</h1>
+      <p class="meta">Last updated: July 4, 2026</p>
+      <div class="pill-row" aria-label="Privacy highlights">
+        <span class="pill">Offline-first</span>
+        <span class="pill">No ads</span>
+        <span class="pill">No sale of personal data</span>
+        <span class="pill">Family sharing is optional</span>
+      </div>
+      <nav aria-label="Legal pages">
+        <a href="./privacy.html">Privacy</a>
+        <a href="./terms.html">Terms</a>
+        <a href="./support.html">Support</a>
+      </nav>
+    </header>
+
+    <section class="notice">
+      <h2>Short version</h2>
+      <p>KinVault is designed to work locally first. Daily reminders, medication confirmations, check-ins, water reminders, SOS actions, and refill notes are stored on your device by default. If you enable family sharing, KinVault may send limited coordination metadata to a relay service so a caregiver can see status and receive useful alerts.</p>
+      <p><strong>Please do not use KinVault for medical emergencies.</strong> Do not send emergency medical details through feedback or support.</p>
+    </section>
+
+    <section>
+      <h2>1. Information you may enter</h2>
+      <ul>
+        <li><strong>Daily care data:</strong> reminders, check-ins, medication task names, refill status, hydration reminders, confirmation status, timestamps, and reason codes you choose.</li>
+        <li><strong>Family sharing setup:</strong> pairing tokens, device role, tracker ID, connection ID, timezone, alert preferences, pause/snooze state, and sync status.</li>
+        <li><strong>Feedback:</strong> if you send feedback, we may receive the app name, message, optional email address, and any details you include.</li>
+        <li><strong>Technical data:</strong> app version, platform, device notification token, crash logs, diagnostics, or remote configuration data when related services are enabled.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. Local-first storage</h2>
+      <p>KinVault stores core app data on your device by default. Offline-only mode does not require an account and is intended to work without sending daily care content to a KinVault server.</p>
+      <p>If you delete the app, clear app data, lose the device, or reset the device, local data may be lost unless you have an external backup.</p>
+    </section>
+
+    <section>
+      <h2>3. Family sharing and relay metadata</h2>
+      <p>If you choose to enable family sharing, KinVault may use a relay service to coordinate between the senior device and caregiver device. The relay is intended to receive only the minimum status data needed for coordination, such as slot type, event status, scheduled time, confirmation time, alert priority, push token, timezone, tracker ID, connection ID, and snooze state.</p>
+      <p>KinVault is designed to avoid sending names, private notes, dosage details, medical records, health measurements, or free-text medical content through the relay. Do not enter sensitive medical details into fields that may be shared.</p>
+    </section>
+
+    <section>
+      <h2>4. Notifications and Firebase</h2>
+      <p>KinVault may use local notifications for reminders and Firebase Cloud Messaging for push notifications when family sharing or remote alerts are enabled. Firebase or similar services may process technical data such as push tokens, device type, operating system version, app version, crash logs, and notification delivery data.</p>
+      <p>Remote configuration may be used for version prompts, store links, feature flags, and app messages.</p>
+    </section>
+
+    <section>
+      <h2>5. Purchases and subscriptions</h2>
+      <p>If KinVault offers Pro features, purchases and subscriptions are processed by Apple App Store or Google Play. We do not receive your full payment card details. The app may store entitlement status so Pro features can be unlocked.</p>
+    </section>
+
+    <section>
+      <h2>6. No ads and no sale of data</h2>
+      <p>KinVault is designed with no third-party advertising. We do not sell your personal data.</p>
+    </section>
+
+    <section>
+      <h2>7. Support and feedback</h2>
+      <p>Feedback may be sent through the app or by email. Please include app version, platform, and a clear description of the issue. Do not include emergency details, full medical records, government IDs, or payment card information.</p>
+    </section>
+
+    <section>
+      <h2>8. Data deletion</h2>
+      <p>You can delete local KinVault data by deleting app data through your device settings or uninstalling the app. If family sharing is enabled and relay data exists, contact us to request deletion where technically and legally possible.</p>
+    </section>
+
+    <section>
+      <h2>9. International processing</h2>
+      <p>Service providers such as Firebase, Apple, Google, email providers, and relay hosting providers may process technical or support information in countries other than where you live.</p>
+    </section>
+
+    <section>
+      <h2>10. Changes</h2>
+      <p>We may update this Privacy Policy when KinVault changes. The updated date at the top shows the latest version.</p>
+    </section>
+
+    <section>
+      <h2>11. Contact</h2>
+      <p>Questions or privacy requests? Contact us at <a href="mailto:khanhquang29000@gmail.com">khanhquang29000@gmail.com</a>.</p>
+    </section>
+
+    <footer>KinVault · <a href="./terms.html">Terms</a> · <a href="./support.html">Support</a></footer>
+  </main>
+</body>
+</html>
